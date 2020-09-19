@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -e
+
+CONFIG="install.conf.yaml"
+DOTBOT_DIR="dotbot"
+
+DOTBOT_BIN="bin/dotbot"
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+cd "${BASEDIR}"
+git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
+git submodule update --init --recursive "${DOTBOT_DIR}"
+
+"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -p dotbot-rust/rust.py --plugin-dir dotbot-brewfile -c "${CONFIG}" "${@}"
+
+check_for_zsh() {
+  if !(echo $SHELL | grep zsh > /dev/null)
+  then
+    echo "Switch to using zsh before continuing"
+    exit 1
+  fi
+
+  echo "zsh ✓"
+}
+
+check_for_homebrew() {
+  if [ $(uname) = "Darwin" ]; then
+    if !(which brew > /dev/null)
+    then
+      echo "Install homebrew before continuing"
+      exit 1
+    fi
+
+    echo "homebrew ✓"
+  fi
+}
+
+make_local_configs() {
+  touch ~/.vimrc_local
+  touch ~/.gitconfig_local
+  touch ~/.tmux_local.conf
+}
+
+check_for_zsh
+check_for_homebrew
+make_local_configs
