@@ -28,3 +28,26 @@ there="$HOME/.shell.here"
 there() {
     cd "$(readlink "${there}")"
 }
+
+# Make a new folder and move to it right away
+function take() {
+  mkdir -p "$1"
+  cd "$1"
+}
+
+function rspec-failed-files {
+  pbpaste | sed "s/rspec //g" | sed "s/:.*//g" | sort | uniq
+}
+
+function vim-errors {
+  rspec-failed-files | nvim -
+}
+
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+fe() {
+  local file
+  file=$(fzf --query="$1" --select-1 --exit-0)
+  [ -n "$file" ] && ${EDITOR:-vim} "$file"
+}

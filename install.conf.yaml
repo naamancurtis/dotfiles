@@ -18,7 +18,9 @@
     ~/.vimrc:
     ~/.zsh:
     ~/.zshrc:
-    ~/Brewfile:
+    ~/.Brewfile:
+    ~/.alacritty.yml:
+    ~/.config/nvim/init.vim: init.vim
 
 - create:
     - ~/code
@@ -32,7 +34,5 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
     - [curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y, Installing Rust]
-
-# Cleaning up:
-- shell:
-  - [brew cleanup, Cleaning up]
+    - pip3 install --user neovim
+    - [brew cleanup, Cleaning up]

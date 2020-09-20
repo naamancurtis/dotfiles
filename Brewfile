@@ -4,6 +4,8 @@ tap "homebrew/cask-fonts"
 tap "homebrew/core"
 tap "universal-ctags/universal-ctags"
 
+cask_args appdir: "~/Applications"
+
 brew "openssl@1.1"
 brew "awscli"
 brew "bat"
@@ -18,16 +20,17 @@ brew "yarn"
 brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 brew "tmux"
 brew "zsh"
+brew "antigen"
+brew "python"
 
 cask "font-victor-mono"
 cask "font-fira-code"
-cask "font-firacode-nerd-font-mono"
 
 cask "iterm2"
 cask "alacritty"
 cask "postman"
 
 cask "google-chrome"
-cask "firefox", args: { appdir: "~/my-apps/Applications" }
+cask "firefox"
 
 cask "flux"

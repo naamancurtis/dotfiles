@@ -49,7 +49,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background, but no title bar buttons
-  decorations: full
+  decorations: buttonless
 
   # Startup Mode (changes require restart)
   #
@@ -61,6 +61,9 @@ window:
   # Values for `startup_mode` (macOS only):
   #   - SimpleFullscreen
   startup_mode: Windowed
+
+  # Allow terminal applications to change Alacritty's window title.
+  dynamic_title: false
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -84,7 +87,7 @@ font:
     # family: Fira Code
     # style: Retina
 
-    family: Menlo
+    family: Menlo 
     # style: Retina
     # family: JetBrains Mono
     # style: Regular
@@ -96,25 +99,25 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: monospace
+    family: Fira Code
 
     # The `style` can be specified to pick a specific face.
     style: monospace
 
   # Italic font face
-  #italic:
+  italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: Source Code Pro
 
     # The `style` can be specified to pick a specific face.
-    #style: Italic
+    style: Italic
 
   # Point size
   # normal working size and streaming
-  size: 13.0
+  size: 16.0
   # size: 17.5
 
   # Offset is the extra space around each character. `offset.y` can be thought of
@@ -144,19 +147,19 @@ font:
   #
   # This is a global setting and will require a log out or restart to take
   # effect.
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 # If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 # Colors (Jellybeans)
 colors:
   # Default colors
   primary:
-    background: '#161616'
+    background: '#282c35'
     foreground: '#e4e4e4'
 
-  # Cursor volors
+  # Cursor colors
   cursor:
     text: '#feffff'
     cursor: '#ffb472'
@@ -164,29 +167,30 @@ colors:
   # Normal colors
   normal:
     black:   '#a3a3a3'
-    red:     '#e98885'
+    red:     '#F07178'
     green:   '#a3c38b'
     yellow:  '#ffc68d'
-    blue:    '#a6cae2'
-    magenta: '#e7cdfb'
+    blue:    '#59c2ff'
+    magenta: '#a37acc'
     cyan:    '#00a69f'
     white:   '#e4e4e4'
 
   # Bright colors
   bright:
-    black:   '#c8c8c8'
-    red:     '#ffb2b0'
-    green:   '#c8e2b9'
-    yellow:  '#ffe1af'
-    blue:    '#bddff7'
-    magenta: '#fce2ff'
-    cyan:    '#0bbdb6'
-    white:   '#feffff'
+    black:   '#575b70'
+    red:     '#ff6e67'
+    green:   '#5af78e'
+    yellow:  '#f4f99d'
+    blue:    '#caa9fa'
+    magenta: '#ff92d0'
+    cyan:    '#9aedfe'
+    white:   '#e6e6e6'
 
   # Selection colors
   selection:
-    text: '#5963a2'
-    background: '#f6f6f6'
+    text: '#9681fe'
+    background: '#d9d9d4'
+
 
 # Visual Bell
 #
@@ -209,7 +213,7 @@ colors:
 #   - Linear
 #
 # Specifying a `duration` of `0` will disable the visual bell.
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
   color: '0xffffff'
@@ -277,9 +281,6 @@ selection:
 
   # When set to `true`, selected text will be copied to the primary clipboard.
   save_to_clipboard: true
-
-# Allow terminal applications to change Alacritty's window title.
-dynamic_title: true
 
 cursor:
   # Cursor style

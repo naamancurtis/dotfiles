@@ -8,35 +8,11 @@
 
 # Set custom prompt
 
-# Allow for variable/function substitution in prompt
+# # Allow for variable/function substitution in prompt
 setopt prompt_subst
 
-# Load color variables to make it easier to color things
+# # Load color variables to make it easier to color things
 autoload -U colors && colors
-
-# Make using 256 colors easier
-if [[ "$(tput colors)" == "256" ]]; then
-    source ~/.zsh/plugins/spectrum.zsh
-    # change default colors
-    fg[red]=$FG[160]
-    fg[green]=$FG[064]
-    fg[yellow]=$FG[136]
-    fg[blue]=$FG[033]
-    fg[magenta]=$FG[125]
-    fg[cyan]=$FG[037]
-
-    fg[teal]=$FG[041]
-    fg[orange]=$FG[166]
-    fg[violet]=$FG[061]
-    fg[neon]=$FG[112]
-    fg[pink]=$FG[183]
-else
-    fg[teal]=$fg[blue]
-    fg[orange]=$fg[yellow]
-    fg[violet]=$fg[magenta]
-    fg[neon]=$fg[green]
-    fg[pink]=$fg[magenta]
-fi
 
 # Current directory, truncated to 3 path elements (or 4 when one of them is "~")
 # The number of elements to keep can be specified as ${1}
@@ -73,22 +49,22 @@ function PR_DIR() {
     echo "%{$fg[green]%}${truncated}%{$fg[orange]%}%B${last}%b%{$reset_color%}"
 }
 
-# An exclamation point if the previous command did not complete successfully
+# # An exclamation point if the previous command did not complete successfully
 function PR_ERROR() {
     echo "%(?..%(!.%{$fg[violet]%}.%{$fg[red]%})%B!%b%{$reset_color%} )"
 }
 
-# The arrow symbol that is used in the prompt
-PR_ARROW_CHAR=">"
+# # The arrow symbol that is used in the prompt
+PR_ARROW_CHAR="❯"
 
-# The arrow in red (for root) or violet (for regular user)
+# # The arrow in red (for root) or violet (for regular user)
 function PR_ARROW() {
     echo "%(!.%{$fg[red]%}.%{$fg[violet]%})${PR_ARROW_CHAR}%{$reset_color%}"
 }
 
-# Set custom rhs prompt
-# User in red (for root) or violet (for regular user)
-RPR_SHOW_USER=true # Set to false to disable user in rhs prompt
+# # Set custom rhs prompt
+# # User in red (for root) or violet (for regular user)
+RPR_SHOW_USER=false # Set to false to disable user in rhs prompt
 function RPR_USER() {
     if [[ "${RPR_SHOW_USER}" == "true" ]]; then
         echo "%(!.%{$fg[red]%}.%{$fg[violet]%})%B%n%b%{$reset_color%}"
@@ -104,7 +80,7 @@ function machine_name() {
 }
 
 # Host in a deterministically chosen color
-RPR_SHOW_HOST=true # Set to false to disable host in rhs prompt
+RPR_SHOW_HOST=false # Set to false to disable host in rhs prompt
 function RPR_HOST() {
     local colors
     colors=(cyan green yellow red pink)
@@ -148,7 +124,7 @@ GIT_PROMPT_MODIFIED="%{$fg[yellow]%}%B$DIFF_SYMBOL%b%{$reset_color%}"
 GIT_PROMPT_STAGED="%{$fg[green]%}%B$DIFF_SYMBOL%b%{$reset_color%}"
 GIT_PROMPT_DETACHED="%{$fg[neon]%}%B!%b%{$reset_color%}"
 
-# Show Git branch/tag, or name-rev if on detached head
+# # Show Git branch/tag, or name-rev if on detached head
 function parse_git_branch() {
     (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
@@ -159,7 +135,7 @@ function parse_git_detached() {
     fi
 }
 
-# Show different symbols as appropriate for various Git repository states
+# # Show different symbols as appropriate for various Git repository states
 function parse_git_state() {
     # Compose this value via multiple conditional appends.
     local GIT_STATE="" GIT_DIFF=""
@@ -207,7 +183,7 @@ function parse_git_state() {
     fi
 }
 
-# If inside a Git repository, print its branch and state
+# # If inside a Git repository, print its branch and state
 RPR_SHOW_GIT=true # Set to false to disable git status in rhs prompt
 function git_prompt_string() {
     if [[ "${RPR_SHOW_GIT}" == "true" ]]; then
@@ -297,18 +273,25 @@ function PR_VARS() {
     done < <(git exec cat .showvars 2>/dev/null)
 }
 
+function rust_toolchain {
+  if [ -f Cargo.toml ]; then
+    rust=$(rustup show active-toolchain | cut -d ' ' -f 1 | cut -d '-' -f 1)
+    echo "[$rust]"
+  fi
+}
+
 # Prompt
 function PCMD() {
     if (( PROMPT_MODE == 0 )); then
         if $_vars_multiline; then
-            echo "$(PR_VARS)$(PR_EXTRA)$(PR_DIR) $(PR_ERROR)$(PR_ARROW) " # space at the end
+            echo "$(PR_VARS)$(PR_EXTRA)$(PR_DIR) $(PR_ERROR)$(PR_ARROW)$(rust_toolchain) " # space at the end
         else
             echo "$(PR_EXTRA)$(PR_DIR)$(PR_VARS) $(PR_ERROR)$(PR_ARROW) " # space at the end
         fi
     elif (( PROMPT_MODE == 1 )); then
-        echo "$(PR_EXTRA)$(PR_DIR 1) $(PR_ERROR)$(PR_ARROW) " # space at the end
+        echo "$(PR_EXTRA)$(PR_DIR 1) $(PR_ERROR)$(PR_ARROW)$(rust_toolchain) " # space at the end
     else
-        echo "$(PR_EXTRA)$(PR_ERROR)$(PR_ARROW) " # space at the end
+        echo "$(PR_EXTRA)$(PR_ERROR)$(PR_ARROW)$(rust_toolchain) " # space at the end
     fi
 }
 

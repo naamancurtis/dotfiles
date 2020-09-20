@@ -1,8 +1,5 @@
 # External plugins (initialized before)
 
-ZSH_BASE=$HOME/dotfiles
-
-source $ZSH_BASE/antigen/antigen.ZSH_BASE
 antigen use oh-my-zsh
 
 antigen bundle git

@@ -7,10 +7,9 @@ alias vi="nvim"
 alias cat="bat"
 
 # ls aliases
-alias ls="exa --icons"
-alias "ls -la"="exa -l -a --icons"
-alias lst="exa -T --git-ignore --group-directories-first --icons"
-
+alias ls="exa"
+alias "ls -la"="exa -l -a"
+alias lst="exa -T --git-ignore --group-directories-first"
 
 # Aliases to protect against overwriting
 alias cp='cp -i'
@@ -18,6 +17,9 @@ alias mv='mv -i'
 
 # git related aliases
 alias gag='git exec ag'
+
+# Rust aliases
+alias ca="cargo"
 
 # Update dotfiles
 dfu() {

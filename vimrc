@@ -58,7 +58,6 @@ Plug 'cespare/vim-toml' " Currently no coc related toml file
 " Javascript & Typescript
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
-
 " === Trialing ===
 Plug 'Shougo/vimproc.vim'
 
@@ -67,9 +66,9 @@ Plug 'christoomey/vim-tmux-runner'
 Plug 'christoomey/vim-sort-motion'
 Plug 'christoomey/vim-system-copy'
 Plug 'davidpdrsn/vim-notable'
+Plug 'davidpdrsn/vim-spectacular'
 
 Plug 'jparise/vim-graphql'
-Plug 'kana/vim-textobj-entire'
 
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-dispatch'
@@ -80,36 +79,21 @@ Plug 'SirVer/ultisnips'
 
 Plug 'nanotech/jellybeans.vim'
 
+Plug 'oknozor/illumination', { 'dir': '~/.illumination', 'do': '.install.sh' }
+
 call plug#end()
 
 " ==============================
 " ===           FZF          ===
 " ==============================
 
-" set rtp+=/usr/local/opt/fzf
 
-" let $FZF_DEFAULT_COMMAND="fd --type file --follow"
 let $FZF_DEFAULT_COMMAND = "rg --files --no-ignore-vcs | rg -v \"(^|/)target/\""
-
-" let g:fzf_layout = { 'down': '~20%' }
-
-" command! -bang -nargs=* Rg
-"   \ call fzf#vim#grep(
-"   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
-"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"   \   <bang>0)
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
-
-" function! s:list_cmd()
-"   let base = fnamemodify(expand('%'), ':h:.:S')
-"   echo base
-"   return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
-" endfunction
 
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
 
@@ -126,7 +110,6 @@ filetype plugin indent on         " Enable good stuff
 syntax enable                     " Enable syntax highlighting
 
 color jellybeans
-set background=dark
 
 set updatetime=250
 

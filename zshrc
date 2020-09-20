@@ -6,6 +6,8 @@ if [ -f ~/.zshrc_local_before ]; then
     source ~/.zshrc_local_before
 fi
 
+source $(brew --prefix)/opt/antigen/share/antigen/antigen.zsh
+
 # External plugins (initialized before)
 source ~/.zsh/plugins_before.zsh
 
