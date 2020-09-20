@@ -78,6 +78,8 @@ Plug 'tpope/vim-speeddating'
 Plug 'SirVer/ultisnips'
 
 Plug 'nanotech/jellybeans.vim'
+Plug 'sainnhe/edge'
+Plug 'sheerun/vim-polyglot'
 
 Plug 'oknozor/illumination', { 'dir': '~/.illumination', 'do': '.install.sh' }
 
@@ -109,7 +111,12 @@ source ~/.vim/functions.vim
 filetype plugin indent on         " Enable good stuff
 syntax enable                     " Enable syntax highlighting
 
-color jellybeans
+let g:edge_style = 'aura'
+let g:edge_enable_italic = 1
+let g:edge_disable_italic_comments = 1
+
+set termguicolors
+colorscheme edge
 
 set updatetime=250
 
@@ -451,7 +458,7 @@ let g:fzf_action = {
   \ 'ctrl-v': 'vsplit' }
 
 let g:lightline = {
-  \ 'colorscheme': 'jellybeans',
+  \ 'colorscheme': 'edge',
   \ 'enable': {
   \   'statusline': 1,
   \   'tabline': 0
