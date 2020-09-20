@@ -4,6 +4,7 @@ alias grep='grep --color'
 
 alias vim="nvim"
 alias vi="nvim"
+alias cat="bat"
 
 # ls aliases
 alias ls="exa --icons"
