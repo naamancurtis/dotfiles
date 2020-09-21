@@ -6,6 +6,8 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
 endif
 
+let mapleader = "\<Space>"
+
 call plug#begin('~/.vim/plugged')
 
 " File searching
@@ -92,10 +94,18 @@ call plug#end()
 
 let $FZF_DEFAULT_COMMAND = "rg --files --no-ignore-vcs | rg -v \"(^|/)target/\""
 
+let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+"command! -bang -nargs=* Rg
+  "\ call fzf#vim#grep(
+  "\   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  "\   fzf#vim#with_preview(), <bang>0)
 
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
 
@@ -113,7 +123,7 @@ syntax enable                     " Enable syntax highlighting
 
 let g:edge_style = 'aura'
 let g:edge_enable_italic = 1
-let g:edge_disable_italic_comments = 1
+let g:edge_disable_italic_comment = 1
 
 set termguicolors
 colorscheme edge
@@ -122,7 +132,7 @@ set updatetime=250
 
 set fillchars+=vert:\             " Don't show pipes in vertical splits
 set hidden                        " Don't unload buffers when leaving them 
-set spell                         " Set spell checking to true 
+set nospell                       " Set spell checking to false by default
 set spelllang=en_us               " Use English US for spell checking
 set lazyredraw                    " Don't redraw screen while running macros
 set scrolljump=5                  " Scroll more than one line
@@ -192,6 +202,15 @@ set foldmethod=indent             " Fold by indentation
 " ===      AUTO-COMMANDS     ===
 " ==============================
 
+augroup configureFoldsAndSpelling
+  autocmd!
+  autocmd FileType mkd       setlocal spell nofoldenable
+  autocmd FileType markdown  setlocal spell nofoldenable
+  autocmd FileType text      setlocal spell nofoldenable
+  autocmd FileType gitcommit setlocal spell
+  autocmd FileType vim       setlocal foldmethod=marker
+augroup END
+
 augroup resumeCursorPosition
   autocmd!
   autocmd BufReadPost *
@@ -250,8 +269,6 @@ augroup miscGroup
   autocmd BufEnter,FocusGained * checktime
 
   autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
-
-  autocmd FileType rust nnoremap <buffer> <cr> :w<cr>:RustFmt<cr>:w<cr>
 augroup END
 
 augroup neorun
@@ -277,12 +294,13 @@ nnoremap <down> 10<C-W>-
 nnoremap <left> 3<C-W>>
 nnoremap <right> 3<C-W><
 
-nmap <leader>w :w<CR>                  " Easy Save
-nnoremap <leader><leader> <c-^>        " Quick Toggle between buffers
+nmap <leader>w :update<CR>                  " Easy Save
+nnoremap <leader>w :update<CR>              " Easy Save
+nnoremap <leader><leader> <c-^>             " Quick Toggle between buffers
 
-" Ctrl+h to stop searching
-vnoremap <C-h> :nohlsearch<cr>
-nnoremap <C-h> :nohlsearch<cr>
+" HH to stop searching
+vnoremap HH :nohlsearch<cr>
+nnoremap HH :nohlsearch<cr>
 
 " Jump to start and end of line using the home row keys
 map H ^
@@ -509,6 +527,16 @@ if has('nvim')
   autocmd BufRead Cargo.toml call crates#toggle()
 endif
  
+" Nerd Commenting
+" <leader>c<space> Toggles comments
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDToggleCheckAllLines = 1
+
+" Change highlighted yank coloring to be more visible
+highlight HighlightedyankRegion cterm=reverse gui=reverse
+
 " ==============================
 " ===      TEST RUNNING      ===
 " ==============================
