@@ -538,3 +538,13 @@ key_bindings:
   - { key: F11,      mods: Super,   chars: "\x1b[23;3~"                      }
   - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                      }
   - { key: NumpadEnter,             chars: "\n"                              }
+  - { key: Key0,     mods: Alt,     chars: "º"                               }
+  - { key: Key1,     mods: Alt,     chars: "¡"                               }
+  - { key: Key2,     mods: Alt,     chars: "€"                               }
+  - { key: Key3,     mods: Alt,     chars: "#"                               }
+  - { key: Key4,     mods: Alt,     chars: "¢"                               }
+  - { key: Key5,     mods: Alt,     chars: "∞"                               }
+  - { key: Key6,     mods: Alt,     chars: "§"                               }
+  - { key: Key7,     mods: Alt,     chars: "¶"                               }
+  - { key: Key8,     mods: Alt,     chars: "•"                               }
+  - { key: Key9,     mods: Alt,     chars: "ª"                               }

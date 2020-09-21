@@ -161,7 +161,6 @@ set cursorline                    " Highlight the current line
 set number                        " Don't show line numbers
 set numberwidth=4                 " The width of the number column
 set relativenumber                " Show relative numbers
-set guifont=Input\ Mono:h11       " Set GUI font
 set guioptions-=T                 " No tool bar in MacVim
 set guioptions-=r                 " Also no scrollbar
 set guioptions-=L                 " Really no scrollbar
@@ -294,8 +293,8 @@ nnoremap <down> 10<C-W>-
 nnoremap <left> 3<C-W>>
 nnoremap <right> 3<C-W><
 
-nmap <leader>w :update<CR>                  " Easy Save
-nnoremap <leader>w :update<CR>              " Easy Save
+nmap <leader>w :update<cr>                  " Easy Save
+nnoremap <leader>w :update<cr>              " Easy Save
 nnoremap <leader><leader> <c-^>             " Quick Toggle between buffers
 
 " HH to stop searching
@@ -366,6 +365,8 @@ tnoremap <A-k> <C-\><C-n><C-W>+i
 tnoremap <A-j> <C-\><C-n><C-W>-i
 tnoremap <A-h> <C-\><C-n>3<C-W>>i
 tnoremap <A-l> <C-\><C-n>3<C-W><i
+tnoremap ∆ <Down>                                  " Alt + k to move down
+tnoremap ˚ <Up>                                    " Alt + j to move up
 
 nnoremap <leader>W :wq<cr>                         " Save and quit
 nnoremap <leader>a :call YankWholeBuffer(0)<cr>
@@ -381,7 +382,7 @@ nnoremap <leader>k :w<cr>:call spectacular#run_tests_with_current_line()<cr>
 nnoremap <leader>rf :call RenameFile()<cr>
 nnoremap <leader>sb :call notable#open_notes_file()<cr>
 
-nnoremap <leader>st :sp term://zsh<cr>
+nnoremap <leader>st :vs term://zsh<cr>
 nnoremap <leader>z :call CorrectSpelling()<cr>
 
 " COC Language Servers
@@ -390,6 +391,7 @@ nnoremap <leader>la :CocCommand actions.open<cr>
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
+
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
@@ -512,12 +514,6 @@ let g:highlightedyank_highlight_duration = 170
 let g:diminactive_enable_focus = 1
 let g:diminactive_use_colorcolumn = 1
 let g:diminactive_use_syntax = 0
-
-" Jump to last edit position on opening file
-if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
 
 " Follow Rust code style rules
 au Filetype rust set colorcolumn=100
