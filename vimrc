@@ -6,6 +6,8 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
 endif
 
+source ~/.vim/functions.vim
+
 let mapleader = "\<Space>"
 
 call plug#begin('~/.vim/plugged')
@@ -56,6 +58,7 @@ let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver'
 " Rust
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml' " Currently no coc related toml file
+Plug 'mhinz/vim-crates'
 
 " Javascript & Typescript
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -322,7 +325,7 @@ noremap <leader>s :Rg
 
 " insert path to current file
 " in command (:) mode
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
+cnoremap %% <C-R>=expand('%:h/')<cr>
 
 " correct spelling from insert mode by hitting CTRL-l
 inoremap <c-l> <esc>:call CorrectSpelling()<cr>a
@@ -473,6 +476,21 @@ vmap <leader>v <Plug>SendSelectionToTmux
 nmap <leader>V <Plug>SetTmuxVars
 
 " ==============================
+" ===    BUILD / RUNNING     ===
+" ==============================
+
+function! s:run_rust_tests()
+  if &modified
+    write
+  end
+  call SmartRun("cargo test --all")
+endfunction
+
+nnoremap <leader>b :call BuildCurrentFile()<cr>
+nnoremap <leader>B :call RunCurrentFile()<cr>
+nnoremap <leader>T :call <SID>run_rust_tests()<cr>
+
+" ==============================
 " ===    MISC PLUGIN VARS    ===
 " ==============================
 
@@ -554,6 +572,8 @@ highlight HighlightedyankRegion cterm=reverse gui=reverse
 " ===      TEST RUNNING      ===
 " ==============================
 
+let g:spectacular_use_terminal_emulator = 1
+
 call spectacular#reset()
 
 call spectacular#add_test_runner(
@@ -569,8 +589,8 @@ call spectacular#add_test_runner(
       \ )
 
 call spectacular#add_test_runner(
-      \ 'rust, pest, toml, cfg, ron, graphql',
-      \ ':call SmartRun("cargo check --tests")',
+      \ 'rust, toml',
+      \ ':call SmartRun("cargo test")',
       \ '.rs'
       \ )
 

@@ -36,7 +36,6 @@ function! MakeMarkdownHeading(level)
   endif
 endfunction
 
-
 function! RenameFile()
   let old_name = expand('%')
   let new_name = input('New file name: ', expand('%'), 'file')
@@ -65,38 +64,25 @@ function! CorrectSpelling()
   let &spell = original_setting
 endfunction
 
+function! BuildCurrentFile()
+  if &filetype == "rust"
+    call SmartRun("cargo build")
+  elseif &filetype == "toml"
+    call SmartRun("cargo build")
+  else
+    echo "Dunno how to run such a file..."
+  endif
+endfunction
+
 function! RunCurrentFile()
-  if &filetype == "ruby"
-    if InRailsApp()
-      call RunCommand("bin/rails\\ runner\\ " . PathToCurrentFile())
-    else
-      call RunCommand("ruby \"" . PathToCurrentFile() . "\"")
-    endif
-  elseif &filetype == "sml"
-    call RunCommand("rlwrap mosml -P full " . PathToCurrentFile())
+  if &filetype == "rust"
+    call RunCommand("cargo run")
   elseif &filetype == "javascript"
     call RunCommand("node " . PathToCurrentFile())
   elseif &filetype == "shell"
     call RunCommand("sh " . PathToCurrentFile())
   elseif &filetype == "python"
     call RunCommand("python " . PathToCurrentFile())
-  elseif &filetype == "php"
-    call RunCommand("php " . PathToCurrentFile())
-  elseif &filetype == "haskell"
-    call RunCommand("runhaskell\\ " . PathToCurrentFile())
-  elseif &filetype == "sh"
-    call RunCommand("sh " . PathToCurrentFile())
-  elseif &filetype == "elixir"
-    call RunCommand("elixir " . PathToCurrentFile())
-  elseif &filetype == "coffee"
-    call RunCommand("coffee " . PathToCurrentFile())
-  elseif &filetype == "tex"
-    call RunCommand("pdflatex\\ " . PathToCurrentFile() . "\\ &&\\ open\\ " . substitute(expand("%"), "\.tex$", ".pdf", ""))
-  elseif &filetype == "java"
-    call RunCommand("javac *.java && java " . substitute(expand("%"), "\.java$", "", ""))
-  elseif &filetype == "c"
-    let x = substitute(expand("%"), "\.c$", "", "")
-    call RunCommand("gcc -o " . x . " " . PathToCurrentFile() . " && ./" . x)
   else
     echo "Dunno how to run such a file..."
   endif
