@@ -197,6 +197,9 @@ set foldenable                    " Enable folds
 set foldlevelstart=99             " Open all folds by default
 set foldmethod=indent             " Fold by indentation
 
+" mouse
+set mouse=a
+
 " ==============================
 " ===      AUTO-COMMANDS     ===
 " ==============================
@@ -365,8 +368,8 @@ tnoremap <A-k> <C-\><C-n><C-W>+i
 tnoremap <A-j> <C-\><C-n><C-W>-i
 tnoremap <A-h> <C-\><C-n>3<C-W>>i
 tnoremap <A-l> <C-\><C-n>3<C-W><i
-tnoremap ∆ <Down>                                  " Alt + k to move down
-tnoremap ˚ <Up>                                    " Alt + j to move up
+tnoremap ∆ <Down>
+tnoremap ˚ <Up>
 
 nnoremap <leader>W :wq<cr>                         " Save and quit
 nnoremap <leader>a :call YankWholeBuffer(0)<cr>
@@ -377,7 +380,7 @@ nnoremap <leader>O :!open %<cr><cr>
 nnoremap <leader>j :call GotoDefinitionInSplit(0)<cr>
 
 nnoremap <leader>t :w<cr>:call spectacular#run_tests()<cr>
-nnoremap <leader>k :w<cr>:call spectacular#run_tests_with_current_line()<cr>
+nnoremap <leader>tl :w<cr>:call spectacular#run_tests_with_current_line()<cr>
 
 nnoremap <leader>rf :call RenameFile()<cr>
 nnoremap <leader>sb :call notable#open_notes_file()<cr>
@@ -385,9 +388,23 @@ nnoremap <leader>sb :call notable#open_notes_file()<cr>
 nnoremap <leader>st :vs term://zsh<cr>
 nnoremap <leader>z :call CorrectSpelling()<cr>
 
+" Snippets
+
+" Trigger configuration. You need to change this to something else than <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-y>"
+let g:UltiSnipsJumpForwardTrigger="<c-.>"
+let g:UltiSnipsJumpBackwardTrigger="<c-,>"
+
 " COC Language Servers
 
 nnoremap <leader>la :CocCommand actions.open<cr>
+
+" Use tab to navigate completion
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Use Enter (<cr>) to confirm completion
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -411,8 +428,8 @@ omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " Use <TAB> for selections ranges.
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Find symbol of current document.
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>

@@ -1,2 +1,4 @@
 Brewfile.lock.json
 vim/plugged
+tmux/plugins
+tmux/resurrect
