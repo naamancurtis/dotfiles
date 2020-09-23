@@ -1,15 +1,15 @@
-# Use colors in coreutils utilities output
-alias ls='ls --color=auto'
-alias grep='grep --color'
-
+# Vim
 alias vim="nvim"
 alias vi="nvim"
-alias cat="bat"
 
 # ls aliases
-alias ls="exa"
-alias "ls -la"="exa -l -a"
+alias l='exa --long --header --git --all --sort name'
+alias la='exa -a --long --header --sort name'
 alias lst="exa -T --git-ignore --group-directories-first"
+
+# Default behaviour aliases
+alias md='mkdir -p'
+alias cat="bat"
 
 # Aliases to protect against overwriting
 alias cp='cp -i'
@@ -17,6 +17,7 @@ alias mv='mv -i'
 
 # git related aliases
 alias gag='git exec ag'
+alias gp="git pull"
 
 # Rust aliases
 alias ca="cargo"
