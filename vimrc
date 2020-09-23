@@ -86,8 +86,6 @@ Plug 'nanotech/jellybeans.vim'
 Plug 'sainnhe/edge'
 Plug 'sheerun/vim-polyglot'
 
-Plug 'oknozor/illumination', { 'dir': '~/.illumination', 'do': '.install.sh' }
-
 call plug#end()
 
 " ==============================
@@ -104,11 +102,6 @@ command! -bang -nargs=* Rg
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
-
-"command! -bang -nargs=* Rg
-  "\ call fzf#vim#grep(
-  "\   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
-  "\   fzf#vim#with_preview(), <bang>0)
 
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
 
@@ -393,6 +386,9 @@ nnoremap <leader>z :call CorrectSpelling()<cr>
 
 " Snippets
 
+let g:UltiSnipsEditSplit = 'horizontal'
+let g:UltiSnipsSnippetDirectories = ["ultisnips"]
+
 " Trigger configuration. You need to change this to something else than <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-y>"
 let g:UltiSnipsJumpForwardTrigger="<c-.>"
@@ -469,6 +465,11 @@ function! StatusDiagnostic() abort
   endif
   return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
 endfunction
+
+" Custom color highlighting for Coc
+
+highlight CocErrorVirtualText ctermfg=Red  guifg=#CC3232
+highlight CocWarningVirtualText ctermfg=Red  guifg=#fff5b1
 
 " tmux
 nmap <leader>v :normal V<cr><Plug>SendSelectionToTmux
