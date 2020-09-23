@@ -394,7 +394,9 @@ let g:UltiSnipsExpandTrigger="<c-y>"
 let g:UltiSnipsJumpForwardTrigger="<c-.>"
 let g:UltiSnipsJumpBackwardTrigger="<c-,>"
 
-" COC Language Servers
+" ==============================
+" ===         COC            ===
+" ==============================
 
 nnoremap <leader>la :CocCommand actions.open<cr>
 
@@ -468,8 +470,12 @@ endfunction
 
 " Custom color highlighting for Coc
 
-highlight CocErrorVirtualText ctermfg=Red  guifg=#CC3232
-highlight CocWarningVirtualText ctermfg=Red  guifg=#fff5b1
+" Set the chaining hint to be different from the rest of the syntax
+highlight CocRustChainingHint ctermfg=White guifg=#9580ff
+
+" Inline error highlighting
+highlight CocErrorVirtualText ctermfg=Red guifg=#CC3232
+highlight CocWarningVirtualText ctermfg=Yellow guifg=#fff5b1
 
 " tmux
 nmap <leader>v :normal V<cr><Plug>SendSelectionToTmux
