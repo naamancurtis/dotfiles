@@ -29,11 +29,13 @@
     - ~/notes
     - ~/.vimdid
 
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    - [curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y, Installing Rust]
+
 - brewfile:
     file: Brewfile
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
-    - [curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y, Installing Rust]
     - pip3 install --user neovim
     - [brew cleanup, Cleaning up]
