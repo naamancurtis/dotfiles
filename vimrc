@@ -53,7 +53,7 @@ Plug 'tpope/vim-fugitive'
 
 " Language Intellisense
 Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() }}
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-rls', 'coc-highlight', 'coc-jest', 'coc-rust-analyzer']
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-rls', 'coc-highlight', 'coc-jest', 'coc-rust-analyzer', 'coc-snippets']
 
 " Rust
 Plug 'rust-lang/rust.vim'
@@ -81,9 +81,9 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
-Plug 'nanotech/jellybeans.vim'
-Plug 'sainnhe/edge'
+Plug 'sainnhe/edge' " Color Scheme
 Plug 'sheerun/vim-polyglot'
 
 call plug#end()
@@ -260,8 +260,6 @@ augroup miscGroup
   autocmd BufWinEnter,WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
 
-  autocmd FileType rust set colorcolumn=9999
-
   autocmd FileType markdown let &makeprg='proselint %'
 
   autocmd BufEnter,FocusGained * checktime
@@ -384,28 +382,35 @@ nnoremap <leader>sb :call notable#open_notes_file()<cr>
 nnoremap <leader>st :vs term://zsh<cr>
 nnoremap <leader>z :call CorrectSpelling()<cr>
 
-" Snippets
-
-let g:UltiSnipsEditSplit = 'horizontal'
-let g:UltiSnipsSnippetDirectories = ["ultisnips"]
-
-" Trigger configuration. You need to change this to something else than <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-y>"
-let g:UltiSnipsJumpForwardTrigger="<c-.>"
-let g:UltiSnipsJumpBackwardTrigger="<c-,>"
-
 " ==============================
 " ===         COC            ===
 " ==============================
 
 nnoremap <leader>la :CocCommand actions.open<cr>
 
-" Use tab to navigate completion
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Use Enter (<cr>) to confirm completion
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use tab for cycling through options - has to be wrapped in autocmd to
+" overwrite plugin
+autocmd VimEnter * inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+autocmd VimEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Snippets
+
+let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsSnippetDirectories = ["ultisnips"]
+
+" Navigate snippet placeholders using tab
+let g:coc_snippet_next = '<Tab>'
+let g:coc_snippet_prev = '<S-Tab>'
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
