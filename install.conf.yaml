@@ -23,7 +23,7 @@
     ~/.alacritty.yml:
     ~/.config/nvim/init.vim: init.vim
     ~/.config/nvim/coc-settings.json: vim/coc-settings.json
-
+    ~/.config/coc/ultisnips: ultisnips
 - create:
     - ~/code
     - ~/code/.cargo

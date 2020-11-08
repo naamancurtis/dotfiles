@@ -63,6 +63,10 @@ Plug 'mhinz/vim-crates'
 " Javascript & Typescript
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
+" Debugger Plugins
+Plug 'puremourning/vimspector'
+Plug 'szw/vim-maximizer'
+
 " === Trialing ===
 Plug 'Shougo/vimproc.vim'
 
@@ -93,7 +97,8 @@ call plug#end()
 " ==============================
 
 
-let $FZF_DEFAULT_COMMAND = "rg --files --no-ignore-vcs | rg -v \"(^|/)target/\""
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs --glob "!{node_modules/*,.git/*}"'
+
 
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
@@ -103,10 +108,13 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
-inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
+let g:fzf_preview_window = 'right:60%'
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'options': '--tiebreak=index'}, <bang>0)
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
+
+" command! -bang -nargs=? -complete=dir Files
+"   \ call fzf#vim#files(<q-args>, {'options': '--tiebreak=index'}, <bang>0)
 
 source ~/.vim/functions.vim
 
@@ -486,6 +494,33 @@ highlight CocWarningVirtualText ctermfg=Yellow guifg=#fff5b1
 nmap <leader>v :normal V<cr><Plug>SendSelectionToTmux
 vmap <leader>v <Plug>SendSelectionToTmux
 nmap <leader>V <Plug>SetTmuxVars
+
+" ==============================
+" ===    DEBUGGING REMAPS    ===
+" ==============================
+"
+" Debugger remaps
+nnoremap <leader>m :MaximizerToggle!<CR>
+nnoremap <leader>dd :call vimspector#Launch()<CR>
+nnoremap <leader>dc :call GotoWindow(g:vimspector_session_windows.code)<CR>
+nnoremap <leader>dt :call GotoWindow(g:vimspector_session_windows.tagpage)<CR>
+nnoremap <leader>dv :call GotoWindow(g:vimspector_session_windows.variables)<CR>
+nnoremap <leader>dw :call GotoWindow(g:vimspector_session_windows.watches)<CR>
+nnoremap <leader>ds :call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>
+nnoremap <leader>do :call GotoWindow(g:vimspector_session_windows.output)<CR>
+nnoremap <leader>de :call vimspector#Reset()<CR>
+
+nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
+
+nmap <leader>dl <Plug>VimspectorStepInto
+nmap <leader>dj <Plug>VimspectorStepOver
+nmap <leader>dk <Plug>VimspectorStepOut
+nmap <leader>d_ <Plug>VimspectorRestart
+nnoremap <leader>d<space> :call vimspector#Continue()<CR>
+
+nmap <leader>drc <Plug>VimspectorRunToCursor
+nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
+nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
 " ==============================
 " ===    BUILD / RUNNING     ===
