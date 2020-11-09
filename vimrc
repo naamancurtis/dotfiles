@@ -52,8 +52,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " Language Intellisense
-Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() }}
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-rls', 'coc-highlight', 'coc-jest', 'coc-rust-analyzer', 'coc-snippets']
+" Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() }}
+" let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-rls', 'coc-highlight', 'coc-jest', 'coc-rust-analyzer', 'coc-snippets']
 
 " Rust
 Plug 'rust-lang/rust.vim'
@@ -90,6 +90,11 @@ Plug 'honza/vim-snippets'
 Plug 'sainnhe/edge' " Color Scheme
 Plug 'sheerun/vim-polyglot'
 
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/diagnostic-nvim'
+
 call plug#end()
 
 " ==============================
@@ -122,8 +127,8 @@ source ~/.vim/functions.vim
 " ===    GENERAL SETTINGS    ===
 " ==============================
 
-filetype plugin indent on         " Enable good stuff
 syntax enable                     " Enable syntax highlighting
+filetype plugin indent on         " Enable good stuff
 
 let g:edge_style = 'aura'
 let g:edge_enable_italic = 1
@@ -287,10 +292,6 @@ augroup end
 " No arrow keys --- force yourself to use the home row
 nnoremap <up> <nop>
 nnoremap <down> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
 
 " Resize windows with the arrow keys
 nnoremap <up> 10<C-W>+
@@ -394,101 +395,173 @@ nnoremap <leader>z :call CorrectSpelling()<cr>
 " ===         COC            ===
 " ==============================
 
-nnoremap <leader>la :CocCommand actions.open<cr>
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+" Temporary - VIM LSP
+
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+lua require'nvim_lsp'.tsserver.setup{ on_attach=require'completion'.on_attach }
+
+" Rust Analyzer Setup
+lua <<EOF
+-- nvim_lsp object
+local nvim_lsp = require'nvim_lsp'
+
+-- function to attach completion and diagnostics
+-- when setting up lsp
+local on_attach = function(client)
+    require'completion'.on_attach(client)
+    require'diagnostic'.on_attach(client)
+end
+-- Enable rust_analyzer
+nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
+EOF
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-" Use tab for cycling through options - has to be wrapped in autocmd to
-" overwrite plugin
 autocmd VimEnter * inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+       \ pumvisible() ? "\<C-n>" :
+       \ <SID>check_back_space() ? "\<TAB>" :
+       \ completion#trigger_completion()
 autocmd VimEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Snippets
+" Visualize diagnostics
+let g:diagnostic_enable_virtual_text = 1
+let g:diagnostic_trimmed_virtual_text = '40'
 
-let g:UltiSnipsEditSplit = 'vertical'
-let g:UltiSnipsSnippetDirectories = ["ultisnips"]
+" Don't show diagnostics while in insert mode
+let g:diagnostic_insert_delay = 1
 
-" Navigate snippet placeholders using tab
-let g:coc_snippet_next = '<Tab>'
-let g:coc_snippet_prev = '<S-Tab>'
+let g:completion_enable_snippet = 'UltiSnips'
+let g:completion_matching_ignore_case = 1
 
-" Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+" Set updatetime for CursorHold
+" 300ms of no cursor movement to trigger CursorHold
+set updatetime=300
 
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+" Enable type inlay hints
+autocmd BufEnter,BufWinEnter,TabEnter,BufWritePost *
+\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
 
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
+" Goto previous/next diagnostic warning/error
+nnoremap <silent> v[ <cmd>PrevDiagnosticCycle<cr>
+nnoremap <silent> v] <cmd>NextDiagnosticCycle<cr>
 
-" Introduce function text object
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
+nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
+nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
+nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>vsd :lua vim.lsp.util.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
 
-" Use <TAB> for selections ranges.
-" nmap <silent> <TAB> <Plug>(coc-range-select)
-" xmap <silent> <TAB> <Plug>(coc-range-select)
+" " Inline error highlighting - https://neovim.io/doc/user/lsp.html#lsp-highlight
+highlight LspDiagnosticsError ctermfg=Red guifg=#CC3232
+highlight LspDiagnosticsErrorSign ctermfg=Red guifg=#CC3232
+highlight LspDiagnosticsWarning ctermfg=Yellow guifg=#fff5b1
+highlight LspDiagnosticsWarningSign ctermfg=Yellow guifg=#fff5b1
 
-" Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" nnoremap <leader>la :CocCommand actions.open<cr>
 
-" Search workspace symbols.
-nnoremap <silent> <space>sy  :<C-u>CocList -I symbols<cr>
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
-" Implement methods for trait
-nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" " Use tab for cycling through options - has to be wrapped in autocmd to
+" " overwrite plugin
+" autocmd VimEnter * inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" autocmd VimEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" " Snippets
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" let g:UltiSnipsEditSplit = 'vertical'
+" let g:UltiSnipsSnippetDirectories = ["ultisnips"]
 
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, 'E' . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, 'W' . info['warning'])
-  endif
-  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
-endfunction
+" " Navigate snippet placeholders using tab
+" let g:coc_snippet_next = '<Tab>'
+" let g:coc_snippet_prev = '<S-Tab>'
 
-" Custom color highlighting for Coc
+" " Remap keys for applying codeAction to the current buffer.
+" nmap <leader>ac  <Plug>(coc-codeaction)
 
-" Set the chaining hint to be different from the rest of the syntax
-highlight CocRustChainingHint ctermfg=White guifg=#9580ff
+" " Apply AutoFix to problem on the current line.
+" nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Inline error highlighting
-highlight CocErrorVirtualText ctermfg=Red guifg=#CC3232
-highlight CocWarningVirtualText ctermfg=Yellow guifg=#fff5b1
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+" nmap <leader>rn <Plug>(coc-rename)
+
+" " Introduce function text object
+" " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+" xmap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap if <Plug>(coc-funcobj-i)
+" omap af <Plug>(coc-funcobj-a)
+
+" " Use <TAB> for selections ranges.
+" " nmap <silent> <TAB> <Plug>(coc-range-select)
+" " xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" " Find symbol of current document.
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+
+" " Search workspace symbols.
+" nnoremap <silent> <space>sy  :<C-u>CocList -I symbols<cr>
+
+" " Implement methods for trait
+" nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
+
+" " Use K to show documentation in preview window.
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" " Highlight the symbol and its references when holding the cursor.
+" " autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
+
+" function! StatusDiagnostic() abort
+"   let info = get(b:, 'coc_diagnostic_info', {})
+"   if empty(info) | return '' | endif
+"   let msgs = []
+"   if get(info, 'error', 0)
+"     call add(msgs, 'E' . info['error'])
+"   endif
+"   if get(info, 'warning', 0)
+"     call add(msgs, 'W' . info['warning'])
+"   endif
+"   return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+" endfunction
+
+" " Custom color highlighting for Coc
+
+" " Set the chaining hint to be different from the rest of the syntax
+" highlight CocRustChainingHint ctermfg=White guifg=#9580ff
+
+" " Inline error highlighting
+" highlight CocErrorVirtualText ctermfg=Red guifg=#CC3232
+" highlight CocWarningVirtualText ctermfg=Yellow guifg=#fff5b1
 
 " tmux
 nmap <leader>v :normal V<cr><Plug>SendSelectionToTmux
