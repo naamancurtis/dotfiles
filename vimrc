@@ -402,7 +402,6 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-lua require'nvim_lsp'.tsserver.setup{ on_attach=require'completion'.on_attach }
 
 " Rust Analyzer Setup
 lua <<EOF
@@ -417,6 +416,7 @@ local on_attach = function(client)
 end
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
+nvim_lsp.tsserver.setup({ on_attach=on_attach })
 EOF
 
 function! s:check_back_space() abort
@@ -449,17 +449,17 @@ autocmd BufEnter,BufWinEnter,TabEnter,BufWritePost *
 \ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
 
 " Goto previous/next diagnostic warning/error
-nnoremap <silent> v[ <cmd>PrevDiagnosticCycle<cr>
-nnoremap <silent> v] <cmd>NextDiagnosticCycle<cr>
+nnoremap <silent> d[ <cmd>PrevDiagnosticCycle<cr>
+nnoremap <silent> d] <cmd>NextDiagnosticCycle<cr>
 
-nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
-nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
-nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
-nnoremap <leader>vsd :lua vim.lsp.util.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
+nnoremap <leader>gd :lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>gi :lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>gsh :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <leader>gr :lua vim.lsp.buf.references()<CR>
+nnoremap <leader>rn :lua vim.lsp.buf.rename()<CR>
+nnoremap <silent>K :lua vim.lsp.buf.hover()<CR>
+nnoremap <leader>ca :lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>sd :lua vim.lsp.util.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
 
 " " Inline error highlighting - https://neovim.io/doc/user/lsp.html#lsp-highlight
 highlight LspDiagnosticsError ctermfg=Red guifg=#CC3232
