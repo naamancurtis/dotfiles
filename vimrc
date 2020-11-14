@@ -9,6 +9,7 @@ endif
 source ~/.vim/functions.vim
 
 let mapleader = "\<Space>"
+nnoremap <leader>svf :so $MYVIMRC<CR>
 
 call plug#begin('~/.vim/plugged')
 
@@ -24,10 +25,9 @@ Plug 'mhinz/vim-grepper'
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-surround'
-Plug 'sheerun/vim-polyglot'
 Plug 'majutsushi/tagbar'
 Plug 'terryma/vim-multiple-cursors'
-
+ 
 " Shell Sanity
 Plug 'pbrisbin/vim-mkdir'
 
@@ -52,6 +52,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " Language Intellisense
+Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() }}
 let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-rls', 'coc-highlight', 'coc-jest', 'coc-rust-analyzer', 'coc-snippets']
 
@@ -61,7 +62,7 @@ Plug 'cespare/vim-toml' " Currently no coc related toml file
 Plug 'mhinz/vim-crates'
 
 " Javascript & Typescript
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
 " Debugger Plugins
 Plug 'puremourning/vimspector'
@@ -93,38 +94,13 @@ Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " ==============================
-" ===           FZF          ===
-" ==============================
-
-
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs --glob "!{node_modules/*,.git/*}"'
-
-
-let g:fzf_layout = { 'down': '~20%' }
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-let g:fzf_preview_window = 'right:60%'
-
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
-
-" command! -bang -nargs=? -complete=dir Files
-"   \ call fzf#vim#files(<q-args>, {'options': '--tiebreak=index'}, <bang>0)
-
-source ~/.vim/functions.vim
-
-" ==============================
 " ===    GENERAL SETTINGS    ===
 " ==============================
 
 filetype plugin indent on         " Enable good stuff
 syntax enable                     " Enable syntax highlighting
 
+" Color Scheme
 let g:edge_style = 'aura'
 let g:edge_enable_italic = 1
 let g:edge_disable_italic_comment = 1
@@ -205,6 +181,42 @@ set foldmethod=indent             " Fold by indentation
 set mouse=a
 
 " ==============================
+" ===           FZF          ===
+" ==============================
+
+
+" let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs --glob "!{node_modules/*,.git/*}"'
+
+let g:fzf_layout = { 'down': '~20%' }
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+let g:fzf_preview_window = 'right:60%'
+
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
+
+" command! -bang -nargs=? -complete=dir Files
+"   \ call fzf#vim#files(<q-args>, {'options': '--tiebreak=index'}, <bang>0)
+
+" Shortcuts for commonly used searches 
+map <C-p> :GFiles<CR>
+map <C-P> :Files<CR>
+nmap <leader>; :Buffers<CR>
+noremap <leader>s :Rg
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' 
+  \ }
+
+" ==============================
 " ===      AUTO-COMMANDS     ===
 " ==============================
 
@@ -228,7 +240,6 @@ augroup END
 augroup miscGroup
   autocmd!
 
-  " somehow this is required to move the gray color of the sign column
   autocmd FileType * highlight clear SignColumn
 
   " when in a git commit buffer go the beginning
@@ -248,12 +259,6 @@ augroup miscGroup
 
   " Disable spell checking in vim help files
   autocmd FileType help set nospell
-
-  " Fasto setup
-  autocmd BufNewFile,BufRead *.fo setlocal ft=fasto
-
-  " Janus setup
-  autocmd BufNewFile,BufRead *.ja setlocal ft=janus
 
   " C setup, Vim thinks .h is C++
   autocmd BufNewFile,BufRead *.h setlocal ft=c
@@ -281,7 +286,7 @@ augroup neorun
 augroup end
 
 " ==============================
-" ===        MAPPINGS        ===
+" ===    GENERAL MAPPINGS    ===
 " ==============================
 
 " No arrow keys --- force yourself to use the home row
@@ -298,9 +303,14 @@ nnoremap <down> 10<C-W>-
 nnoremap <left> 3<C-W>>
 nnoremap <right> 3<C-W><
 
-nmap <leader>w :update<cr>                  " Easy Save
-nnoremap <leader>w :update<cr>              " Easy Save
-nnoremap <leader><leader> <c-^>             " Quick Toggle between buffers
+" save and quit
+nnoremap <leader>W :wq<cr>
+" safe save
+nnoremap <leader>w :update<CR>
+" double leader to toggle between buffers
+nnoremap <leader><leader> <c-^>
+" leader q to just close the current focused buffer
+nnoremap <leader>q :bd<CR>
 
 " HH to stop searching
 vnoremap HH :nohlsearch<cr>
@@ -310,30 +320,26 @@ nnoremap HH :nohlsearch<cr>
 map H ^
 map L $
 
-" No arrow keys --- force yourself to use the home row
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+" ==============================
+" ===    CUSTOM FUNCTIONS    ===
+" ==============================
 
-" fzf
-" Shortcuts for commonly used searches 
-map <C-p> :Files<CR>
-nmap <leader>; :Buffers<CR>
-noremap <leader>s :Rg
-
-" insert path to current file
-" in command (:) mode
+" insert path to current file in command (:) mode
 cnoremap %% <C-R>=expand('%:h/')<cr>
 
-" correct spelling from insert mode by hitting CTRL-l
-inoremap <c-l> <esc>:call CorrectSpelling()<cr>a
+" rename current buffer
+nnoremap <leader>rf :call RenameFile()<cr>
 
-" Git Fugitive
+" ==============================
+" ===          GIT           ===
+" ==============================
+
 set tags^=.git/tags;~
+
 nmap <leader>gs :G<CR>
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
+
 nnoremap <leader>gc :Gcommit -v<cr>
 nnoremap <leader>gp :Gpush<cr>
 
@@ -360,6 +366,10 @@ xmap <Leader>R
     \ :cfdo %s/<C-r>s//g \| update
      \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
+" ==============================
+" ===     TERMINAL MODE      ===
+" ==============================
+
 " Make terminal mode behave more like any other mode
 tnoremap <C-[> <C-\><C-n>
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -373,28 +383,23 @@ tnoremap <A-l> <C-\><C-n>3<C-W><i
 tnoremap ∆ <Down>
 tnoremap ˚ <Up>
 
-nnoremap <leader>W :wq<cr>                         " Save and quit
+" Open terminal in vertical split
+nnoremap <leader>st :vs term://zsh<cr>
+
 nnoremap <leader>a :call YankWholeBuffer(0)<cr>
 nnoremap <leader>p :call PasteFromSystemClipBoard()<cr>
 
 nnoremap <leader>J :call GotoDefinitionInSplit(1)<cr>
-nnoremap <leader>O :!open %<cr><cr>
 nnoremap <leader>j :call GotoDefinitionInSplit(0)<cr>
 
-nnoremap <leader>t :w<cr>:call spectacular#run_tests()<cr>
-nnoremap <leader>tl :w<cr>:call spectacular#run_tests_with_current_line()<cr>
 
-nnoremap <leader>rf :call RenameFile()<cr>
-nnoremap <leader>sb :call notable#open_notes_file()<cr>
-
-nnoremap <leader>st :vs term://zsh<cr>
-nnoremap <leader>z :call CorrectSpelling()<cr>
+nnoremap <leader>cs :call CorrectSpelling()<cr>
 
 " ==============================
 " ===         COC            ===
 " ==============================
 
-nnoremap <leader>la :CocCommand actions.open<cr>
+nnoremap <leader>ca :CocCommand actions.open<cr>
 
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
@@ -416,15 +421,11 @@ autocmd VimEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetDirectories = ["ultisnips"]
 
-" Navigate snippet placeholders using tab
-let g:coc_snippet_next = '<Tab>'
-let g:coc_snippet_prev = '<S-Tab>'
-
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader> ca  <Plug>(coc-codeaction)
 
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader> qf  <Plug>(coc-fix-current)
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -432,24 +433,29 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader> rn <Plug>(coc-rename)
 
 " Introduce function text object
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
 xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
 omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
-" Use <TAB> for selections ranges.
-" nmap <silent> <TAB> <Plug>(coc-range-select)
-" xmap <silent> <TAB> <Plug>(coc-range-select)
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OrganiseImports :call CocAction('runCommand', 'editor.action.organizeImport')
+
+nnoremap <leader>OI :OrganiseImports<CR>
 
 " Find symbol of current document.
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <space>o :<C-u>CocList outline<cr>
 
 " Search workspace symbols.
-nnoremap <silent> <space>sy  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>sy :<C-u>CocList -I symbols<cr>
 
 " Implement methods for trait
 nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
@@ -463,8 +469,10 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
 
@@ -490,10 +498,37 @@ highlight CocRustChainingHint ctermfg=White guifg=#9580ff
 highlight CocErrorVirtualText ctermfg=Red guifg=#CC3232
 highlight CocWarningVirtualText ctermfg=Yellow guifg=#fff5b1
 
-" tmux
+" ==============================
+" ===          TMUX          ===
+" ==============================
+
 nmap <leader>v :normal V<cr><Plug>SendSelectionToTmux
 vmap <leader>v <Plug>SendSelectionToTmux
 nmap <leader>V <Plug>SetTmuxVars
+
+" Hack to make CTRL-h work in Neovim
+nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
+
+" ==============================
+" ===          GUI           ===
+" ==============================
+
+let g:lightline = {
+  \ 'colorscheme': 'edge',
+  \ 'enable': {
+  \   'statusline': 1,
+  \   'tabline': 0
+  \ },
+  \ 'active': {
+  \   'right': [[ 'lineinfo' ]],
+  \   'left': [[ 'mode', 'paste' ],
+  \            [ 'readonly', 'relativepath', 'gitbranch', 'modified', 'cocstatus' ]]
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'fugitive#head',
+  \   'cocstatus': 'coc#status',
+  \ },
+  \ }
 
 " ==============================
 " ===    DEBUGGING REMAPS    ===
@@ -535,89 +570,14 @@ endfunction
 
 nnoremap <leader>b :call BuildCurrentFile()<cr>
 nnoremap <leader>B :call RunCurrentFile()<cr>
-nnoremap <leader>T :call <SID>run_rust_tests()<cr>
-
-" ==============================
-" ===    MISC PLUGIN VARS    ===
-" ==============================
-
-let g:UltiSnipsEditSplit = 'horizontal'
-let g:UltiSnipsSnippetDirectories = ["ultisnips"]
-
-let g:multi_cursor_exit_from_visual_mode = 0
-
-let g:spectacular_use_terminal_emulator = 1
-let g:spectacular_debugging_mode = 0
-
-let g:notable_notes_folder = "~/notes/"
-
-" Hack to make CTRL-h work in Neovim
-nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
-
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-let g:lightline = {
-  \ 'colorscheme': 'edge',
-  \ 'enable': {
-  \   'statusline': 1,
-  \   'tabline': 0
-  \ },
-  \ 'active': {
-  \   'right': [[ 'lineinfo' ]],
-  \   'left': [[ 'mode', 'paste' ],
-  \            [ 'readonly', 'relativepath', 'gitbranch', 'modified', 'cocstatus' ]]
-  \ },
-  \ 'component_function': {
-  \   'gitbranch': 'fugitive#head',
-  \   'cocstatus': 'coc#status',
-  \ },
-  \ 'component_expand': {
-  \   'linter_checking': 'lightline#ale#checking',
-  \   'linter_warnings': 'lightline#ale#warnings',
-  \   'linter_errors': 'lightline#ale#errors',
-  \   'linter_ok': 'lightline#ale#ok',
-  \ },
-  \ 'component_type': {
-  \   'linter_checking': 'left',
-  \   'linter_warnings': 'warning',
-  \   'cocstatus': 'warning',
-  \   'linter_errors': 'error',
-  \   'linter_ok': 'left',
-  \ }
-  \ }
-
-let g:rustfmt_command = "rustfmt"
-let g:rustfmt_autosave=1     
-let g:highlightedyank_highlight_duration = 170
-
-let g:diminactive_enable_focus = 1
-let g:diminactive_use_colorcolumn = 1
-let g:diminactive_use_syntax = 0
-
-" Follow Rust code style rules
-au Filetype rust set colorcolumn=100
-
-" Crate information
-if has('nvim')
-  autocmd BufRead Cargo.toml call crates#toggle()
-endif
- 
-" Nerd Commenting
-" <leader>c<space> Toggles comments
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDDefaultAlign = 'left'
-let g:NERDToggleCheckAllLines = 1
-
-" Change highlighted yank coloring to be more visible
-highlight HighlightedyankRegion cterm=reverse gui=reverse
 
 " ==============================
 " ===      TEST RUNNING      ===
 " ==============================
+
+nnoremap <leader>t :w<cr>:call spectacular#run_tests()<cr>
+nnoremap <leader>tl :w<cr>:call spectacular#run_tests_with_current_line()<cr>
+nnoremap <leader>T :call <SID>run_rust_tests()<cr>
 
 let g:spectacular_use_terminal_emulator = 1
 
@@ -640,6 +600,65 @@ call spectacular#add_test_runner(
       \ ':call SmartRun("cargo test")',
       \ '.rs'
       \ )
+
+let g:spectacular_use_terminal_emulator = 1
+let g:spectacular_debugging_mode = 0
+
+" ==============================
+" ===        SNIPPETS        ===
+" ==============================
+
+let g:UltiSnipsEditSplit = 'horizontal'
+let g:UltiSnipsSnippetDirectories = ["ultisnips"]
+
+" ==============================
+" ===      NOTE TAKING       ===
+" ==============================
+
+nnoremap <leader>sb :call notable#open_notes_file()<cr>
+let g:notable_notes_folder = "~/notes/"
+
+" ==============================
+" ===     COMMENTING         ===
+" ==============================
+
+" turn off all the default bindings
+let g:NERDCreateDefaultMappings = 0
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDToggleCheckAllLines = 1
+
+map <leader>c<leader> <plug>NERDCommenterToggle
+
+" ==============================
+" == ** LANGUAGE SPECIFICS ** ==
+" ==============================
+
+" ==============================
+" ===         RUST           ===
+" ==============================
+
+let g:rustfmt_command = "rustfmt"
+let g:rustfmt_autosave = 1
+
+" Follow Rust code style rules
+au Filetype rust set colorcolumn=100
+
+" Crate information
+if has('nvim')
+  autocmd BufRead Cargo.toml call crates#toggle()
+endif
+
+" ==============================
+" ===     MISC SETTINGS      ===
+" ==============================
+
+let g:multi_cursor_exit_from_visual_mode = 0
+
+" Change highlighted yank coloring to be more visible
+highlight HighlightedyankRegion cterm=reverse gui=reverse
+let g:highlightedyank_highlight_duration = 170
 
 " ==============================
 " ===  LOCAL CUSTOMIZATIONS  ===
