@@ -180,12 +180,14 @@ set foldmethod=indent             " Fold by indentation
 " mouse
 set mouse=a
 
+set t_ZH=^[[3m
+set t_ZR=^[[23m
+
 " ==============================
 " ===           FZF          ===
 " ==============================
 
-
-" let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs --glob "!{node_modules/*,.git/*}"'
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs'
 
 let g:fzf_layout = { 'down': '~20%' }
 
@@ -201,12 +203,12 @@ let g:fzf_preview_window = 'right:60%'
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
 
-" command! -bang -nargs=? -complete=dir Files
-"   \ call fzf#vim#files(<q-args>, {'options': '--tiebreak=index'}, <bang>0)
+command! -bang -nargs=? -complete=dir GFiles
+    \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
 
 " Shortcuts for commonly used searches 
-map <C-p> :GFiles<CR>
-map <C-P> :Files<CR>
+map <C-p> :GFiles<cr>
+map <leader><C-p> :Files<cr>
 nmap <leader>; :Buffers<CR>
 noremap <leader>s :Rg
 
@@ -304,7 +306,7 @@ nnoremap <left> 3<C-W>>
 nnoremap <right> 3<C-W><
 
 " save and quit
-nnoremap <leader>W :wq<cr>
+nnoremap <leader>W :wq<CR>
 " safe save
 nnoremap <leader>w :update<CR>
 " double leader to toggle between buffers
@@ -320,6 +322,12 @@ nnoremap HH :nohlsearch<cr>
 map H ^
 map L $
 
+" Pasting
+xnoremap <leader>p "_dP
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y gg"+yG
+
 " ==============================
 " ===    CUSTOM FUNCTIONS    ===
 " ==============================
@@ -329,6 +337,10 @@ cnoremap %% <C-R>=expand('%:h/')<cr>
 
 " rename current buffer
 nnoremap <leader>rf :call RenameFile()<cr>
+
+nnoremap <leader>a :call YankWholeBuffer(0)<cr>
+nnoremap <leader>p :call PasteFromSystemClipBoard()<cr>
+nnoremap <leader>cs :call CorrectSpelling()<cr>
 
 " ==============================
 " ===          GIT           ===
@@ -386,15 +398,6 @@ tnoremap ˚ <Up>
 " Open terminal in vertical split
 nnoremap <leader>st :vs term://zsh<cr>
 
-nnoremap <leader>a :call YankWholeBuffer(0)<cr>
-nnoremap <leader>p :call PasteFromSystemClipBoard()<cr>
-
-nnoremap <leader>J :call GotoDefinitionInSplit(1)<cr>
-nnoremap <leader>j :call GotoDefinitionInSplit(0)<cr>
-
-
-nnoremap <leader>cs :call CorrectSpelling()<cr>
-
 " ==============================
 " ===         COC            ===
 " ==============================
@@ -416,10 +419,6 @@ autocmd VimEnter * inoremap <silent><expr> <TAB>
       \ coc#refresh()
 autocmd VimEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Snippets
-
-let g:UltiSnipsEditSplit = 'vertical'
-let g:UltiSnipsSnippetDirectories = ["ultisnips"]
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader> ca  <Plug>(coc-codeaction)
@@ -502,13 +501,6 @@ highlight CocWarningVirtualText ctermfg=Yellow guifg=#fff5b1
 " ===          TMUX          ===
 " ==============================
 
-nmap <leader>v :normal V<cr><Plug>SendSelectionToTmux
-vmap <leader>v <Plug>SendSelectionToTmux
-nmap <leader>V <Plug>SetTmuxVars
-
-" Hack to make CTRL-h work in Neovim
-nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
-
 " ==============================
 " ===          GUI           ===
 " ==============================
@@ -543,7 +535,7 @@ nnoremap <leader>dv :call GotoWindow(g:vimspector_session_windows.variables)<CR>
 nnoremap <leader>dw :call GotoWindow(g:vimspector_session_windows.watches)<CR>
 nnoremap <leader>ds :call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>
 nnoremap <leader>do :call GotoWindow(g:vimspector_session_windows.output)<CR>
-nnoremap <leader>de :call vimspector#Reset()<CR>
+nnoremap <leader>dr :call vimspector#Reset()<CR>
 
 nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
 
@@ -561,13 +553,6 @@ nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 " ===    BUILD / RUNNING     ===
 " ==============================
 
-function! s:run_rust_tests()
-  if &modified
-    write
-  end
-  call SmartRun("cargo test --all")
-endfunction
-
 nnoremap <leader>b :call BuildCurrentFile()<cr>
 nnoremap <leader>B :call RunCurrentFile()<cr>
 
@@ -577,7 +562,6 @@ nnoremap <leader>B :call RunCurrentFile()<cr>
 
 nnoremap <leader>t :w<cr>:call spectacular#run_tests()<cr>
 nnoremap <leader>tl :w<cr>:call spectacular#run_tests_with_current_line()<cr>
-nnoremap <leader>T :call <SID>run_rust_tests()<cr>
 
 let g:spectacular_use_terminal_emulator = 1
 
@@ -608,7 +592,7 @@ let g:spectacular_debugging_mode = 0
 " ===        SNIPPETS        ===
 " ==============================
 
-let g:UltiSnipsEditSplit = 'horizontal'
+let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetDirectories = ["ultisnips"]
 
 " ==============================

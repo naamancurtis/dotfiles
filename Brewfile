@@ -22,9 +22,12 @@ brew "tmux"
 brew "zsh"
 brew "antigen"
 brew "python"
+brew "ncurses"
 
 cask "font-victor-mono"
 cask "font-fira-code"
+cask "font-iosevka"
+cask "font-iosevka-ss12"
 
 cask "iterm2"
 cask "alacritty"

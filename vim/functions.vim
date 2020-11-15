@@ -303,30 +303,30 @@ function! FuzzyFileFind(path)
 endfunction
 
 " <test-running-functions>
-  " Functions used to run tests in a terminal split and automatically closing
-  " the split if the tests are green. If they're red, jump forward to the
-  " word 'Failure'
-  function! TerminalRun(cmd)
-    execute "new"
-    call termopen(a:cmd, {
-          \ 'on_exit': function('TerminalOnExit'),
-          \ 'buf': expand('<abuf>')
-          \})
-    execute "normal i"
-  endfunction
+" Functions used to run tests in a terminal split and automatically closing
+" the split if the tests are green. If they're red, jump forward to the
+" word 'Failure'
+function! TerminalRun(cmd)
+	execute "new"
+	call termopen(a:cmd, {
+				\ 'on_exit': function('TerminalOnExit'),
+				\ 'buf': expand('<abuf>')
+				\})
+	execute "normal i"
+endfunction
 
-  function! TerminalOnExit(job_id, exit_code, event) dict
-    if a:exit_code == 0
-      execute "bd! " . s:test_buffer_number
-      wincmd =
-    else
-      wincmd =
-    endif
-  endfunction
+function! TerminalOnExit(job_id, exit_code, event) dict
+	if a:exit_code == 0
+		execute "bd! " . s:test_buffer_number
+		wincmd =
+	else
+		wincmd =
+	endif
+endfunction
 
-  function! TerminalOnTermClose(buf)
-    let s:test_buffer_number = a:buf
-  endfunction
+function! TerminalOnTermClose(buf)
+	let s:test_buffer_number = a:buf
+endfunction
 " </test-running-functions>
 
 function! FifoRun(cmd)
@@ -380,3 +380,8 @@ function! ImportBuild()
     \ 'on_notification': function('Ready'),
     \ })
 endfunction
+
+function! GotoWindow(id)
+    call win_gotoid(a:id)
+    MaximizerToggle
+endfun

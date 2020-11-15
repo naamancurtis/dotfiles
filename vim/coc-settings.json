@@ -3,8 +3,8 @@
   "rust.clippy_preference": "on",
   "eslint.filetypes": ["*"],
   "eslint.autoFixOnSave": true,
-  "rust-analyzer.checkOnSave.command": "clippy",
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextCurrentLineOnly": false,
-  "diagnostic.messageTarget": "echo"
+  "diagnostic.messageTarget": "echo",
+  "rust-analyzer.checkOnSave.command": "clippy"
 }
