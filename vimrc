@@ -6,8 +6,6 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source ~/.config/nvim/init.vim
 endif
 
-source ~/.vim/functions.vim
-
 let mapleader = "\<Space>"
 nnoremap <leader>svf :so $MYVIMRC<CR>
 
@@ -27,6 +25,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-repeat'
  
 " Shell Sanity
 Plug 'pbrisbin/vim-mkdir'
@@ -54,7 +53,10 @@ Plug 'tpope/vim-fugitive'
 " Language Intellisense
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() }}
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-rls', 'coc-highlight', 'coc-jest', 'coc-rust-analyzer', 'coc-snippets']
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-highlight', 'coc-jest', 'coc-rust-analyzer', 'coc-snippets']
+Plug 'sheerun/vim-polyglot'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Rust
 Plug 'rust-lang/rust.vim'
@@ -68,11 +70,13 @@ Plug 'mhinz/vim-crates'
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 
+" Tmux
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
+
 " === Trialing ===
 Plug 'Shougo/vimproc.vim'
 
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'christoomey/vim-tmux-runner'
 Plug 'christoomey/vim-sort-motion'
 Plug 'christoomey/vim-system-copy'
 Plug 'davidpdrsn/vim-notable'
@@ -83,13 +87,9 @@ Plug 'jparise/vim-graphql'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 
 Plug 'sainnhe/edge' " Color Scheme
-Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
@@ -182,6 +182,8 @@ set mouse=a
 
 set t_ZH=^[[3m
 set t_ZR=^[[23m
+
+source ~/.vim/functions.vim
 
 " ==============================
 " ===           FZF          ===
@@ -421,10 +423,10 @@ autocmd VimEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader> ca  <Plug>(coc-codeaction)
+nmap <leader> ca <Plug>(coc-codeaction)
 
 " Apply AutoFix to problem on the current line.
-nmap <leader> qf  <Plug>(coc-fix-current)
+nmap <leader> qf <Plug>(coc-fix-current)
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -445,10 +447,11 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OrganiseImports :call CocAction('runCommand', 'editor.action.organizeImport')
+" Add `:OrganiseImports` command for organize imports of the current buffer. - Not currently
+" supported in Rust
 
-nnoremap <leader>OI :OrganiseImports<CR>
+" command! -nargs=0 OrganiseImports :call CocAction('runCommand', 'editor.action.organizeImport')
+" nnoremap <leader>OI :OrganiseImports<CR>
 
 " Find symbol of current document.
 nnoremap <silent> <space>o :<C-u>CocList outline<cr>

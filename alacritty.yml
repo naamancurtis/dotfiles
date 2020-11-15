@@ -97,7 +97,7 @@ font:
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
     family: Iosevka Term SS12
-    style: Semibold
+    style: Bold
 
   # Italic font face
   italic:
@@ -106,7 +106,7 @@ font:
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
     family: Iosevka Term SS12
-    style: Light Italic
+    style: Light Oblique
 
   # Point size
   # normal working size and streaming
