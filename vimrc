@@ -22,8 +22,7 @@ Plug 'mhinz/vim-grepper'
 " Coding Sanity
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
-Plug 'tpope/vim-surround'
-Plug 'majutsushi/tagbar'
+" Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
  
@@ -38,7 +37,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'editorconfig/editorconfig-vim'
 
 " VIM Enhancements
-Plug 'ciaranm/securemodelines'
 Plug 'justinmk/vim-sneak'
 
 " GUI Enhancements
@@ -104,6 +102,8 @@ syntax enable                     " Enable syntax highlighting
 let g:edge_style = 'aura'
 let g:edge_enable_italic = 1
 let g:edge_disable_italic_comment = 1
+
+let g:python3_host_prog = '/usr/local/opt/python@3.8/bin/python3.8'
 
 set termguicolors
 colorscheme edge
@@ -565,8 +565,6 @@ nnoremap <leader>B :call RunCurrentFile()<cr>
 
 nnoremap <leader>t :w<cr>:call spectacular#run_tests()<cr>
 nnoremap <leader>tl :w<cr>:call spectacular#run_tests_with_current_line()<cr>
-
-let g:spectacular_use_terminal_emulator = 1
 
 call spectacular#reset()
 

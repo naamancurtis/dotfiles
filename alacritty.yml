@@ -86,7 +86,7 @@ font:
     #   - (Windows) Consolas
     # family: Fira Code
     # style: Retina
-    family: Iosevka Term SS12
+    family: Iosevka Term
     style: Regular
 
   # Bold font face
