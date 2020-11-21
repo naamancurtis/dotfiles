@@ -104,7 +104,6 @@ let g:edge_enable_italic = 1
 let g:edge_disable_italic_comment = 1
 
 let g:python3_host_prog = '/usr/local/opt/python@3.8/bin/python3.8'
-
 set termguicolors
 colorscheme edge
 
@@ -404,7 +403,7 @@ nnoremap <leader>st :vs term://zsh<cr>
 " ===         COC            ===
 " ==============================
 
-nnoremap <leader>ca :CocCommand actions.open<cr>
+nnoremap <leader>cao :CocCommand actions.open<cr>
 
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
@@ -427,7 +426,6 @@ nmap <leader> ca <Plug>(coc-codeaction)
 
 " Apply AutoFix to problem on the current line.
 nmap <leader> qf <Plug>(coc-fix-current)
-
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
