@@ -7,8 +7,7 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 let mapleader = "\<Space>"
-nnoremap <leader>svf :so $MYVIMRC<CR>
-
+nnoremap <leader>svf :source $MYVIMRC<CR>
 call plug#begin('~/.vim/plugged')
 
 " File searching
@@ -35,6 +34,7 @@ Plug 'preservim/nerdcommenter'
 " - Automatic adjusting of editor settings (tabs vs spaces etc.)
 Plug 'tpope/vim-sleuth'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'ciaranm/securemodelines'
 
 " VIM Enhancements
 Plug 'justinmk/vim-sneak'
@@ -51,7 +51,6 @@ Plug 'tpope/vim-fugitive'
 " Language Intellisense
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() }}
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-eslint', 'coc-tsserver', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-highlight', 'coc-jest', 'coc-rust-analyzer', 'coc-snippets']
 Plug 'sheerun/vim-polyglot'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -154,7 +153,6 @@ highlight TermCursor ctermfg=red guifg=red
 set hlsearch                      " Highlight search matches
 set ignorecase                    " Do case insensitive search unless there are capital letters
 set incsearch                     " Perform incremental searching
-set smartcase
 
 " backups & undo
 set noswapfile
@@ -242,9 +240,6 @@ augroup END
 
 augroup miscGroup
   autocmd!
-
-  autocmd FileType * highlight clear SignColumn
-
   " when in a git commit buffer go the beginning
   autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
@@ -257,30 +252,11 @@ augroup miscGroup
   " configure indentation for python
   autocmd FileType python set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 
-  " configure indentation for python
-  autocmd FileType rust set expandtab tabstop=4 softtabstop=4 shiftwidth=4
-
   " Disable spell checking in vim help files
   autocmd FileType help set nospell
 
-  " C setup, Vim thinks .h is C++
-  autocmd BufNewFile,BufRead *.h setlocal ft=c
-
-  " C setup, Vim thinks .h is C++
-  autocmd BufNewFile,BufRead /private/tmp/* set filetype=markdown
-
-  " Pow setup
-  autocmd BufNewFile,BufRead *.pow setlocal ft=pow
-  autocmd FileType pow set commentstring={{\ %s\ }}
-
   autocmd BufWinEnter,WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
-
-  autocmd FileType markdown let &makeprg='proselint %'
-
-  autocmd BufEnter,FocusGained * checktime
-
-  autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
 augroup END
 
 augroup neorun
@@ -318,10 +294,6 @@ nnoremap <leader>q :bd<CR>
 " HH to stop searching
 vnoremap HH :nohlsearch<cr>
 nnoremap HH :nohlsearch<cr>
-
-" Jump to start and end of line using the home row keys
-map H ^
-map L $
 
 " Pasting
 xnoremap <leader>p "_dP
@@ -389,19 +361,26 @@ tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
-tnoremap <A-k> <C-\><C-n><C-W>+i
-tnoremap <A-j> <C-\><C-n><C-W>-i
+" tnoremap <A-k> <C-\><C-n><C-W>+i
+" tnoremap <A-j> <C-\><C-n><C-W>-i
+tnoremap <A-k> <Up>
+tnoremap <A-j> <Down>
 tnoremap <A-h> <C-\><C-n>3<C-W>>i
 tnoremap <A-l> <C-\><C-n>3<C-W><i
-tnoremap ∆ <Down>
-tnoremap ˚ <Up>
+" tnoremap ∆ <Down>
+" tnoremap ˚ <Up>
 
 " Open terminal in vertical split
-nnoremap <leader>st :vs term://zsh<cr>
+nnoremap <leader>st :vs term://zsh<cr>¡
 
 " ==============================
 " ===         COC            ===
 " ==============================
+
+let g:coc_global_extensions = [ 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-highlight',  'coc-tslint-plugin',  'coc-rust-analyzer', 'coc-snippets']
+ " \ 'coc-eslint',
+ " \ 'coc-tsserver',
+ " \ 'coc-jest',
 
 nnoremap <leader>cao :CocCommand actions.open<cr>
 
