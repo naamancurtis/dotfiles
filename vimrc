@@ -209,6 +209,7 @@ map <C-p> :GFiles<CR>
 map <leader><C-p> :Files<CR>
 nmap <leader>; :Buffers<CR>
 noremap <leader>s :Rg<CR>
+noremap <leader>h :History:<CR>
 
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -288,7 +289,7 @@ nnoremap <leader>w :update<CR>
 " double leader to toggle between buffers
 nnoremap <leader><leader> <c-^>
 " leader q to just close the current focused buffer
-nnoremap <leader>q :bd<CR>
+nnoremap <leader>q :bd!<CR>
 
 " HH to stop searching
 vnoremap HH :nohlsearch<cr>
