@@ -393,12 +393,11 @@ endfunction
 
 " Use tab for cycling through options - has to be wrapped in autocmd to
 " overwrite plugin
-autocmd VimEnter * inoremap <silent><expr> <TAB>
+inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-autocmd VimEnter * inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader> ca <Plug>(coc-codeaction)
