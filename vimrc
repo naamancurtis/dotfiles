@@ -22,7 +22,6 @@ Plug 'mhinz/vim-grepper'
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
 " Plug 'tpope/vim-surround'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
  
 " Shell Sanity
@@ -206,10 +205,10 @@ command! -bang -nargs=? -complete=dir GFiles
     \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)
 
 " Shortcuts for commonly used searches 
-map <C-p> :GFiles<cr>
-map <leader><C-p> :Files<cr>
+map <C-p> :GFiles<CR>
+map <leader><C-p> :Files<CR>
 nmap <leader>; :Buffers<CR>
-noremap <leader>s :Rg
+noremap <leader>s :Rg<CR>
 
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
