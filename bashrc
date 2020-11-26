@@ -38,3 +38,5 @@ fi
 if [ -f ~/.bashrc_local_after ]; then
     source ~/.bashrc_local_after
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

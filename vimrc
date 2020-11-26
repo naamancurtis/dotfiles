@@ -152,6 +152,7 @@ highlight TermCursor ctermfg=red guifg=red
 set hlsearch                      " Highlight search matches
 set ignorecase                    " Do case insensitive search unless there are capital letters
 set incsearch                     " Perform incremental searching
+set smartcase
 
 " backups & undo
 set noswapfile
@@ -188,15 +189,12 @@ source ~/.vim/functions.vim
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --no-ignore-vcs'
 
 let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_preview_window = 'right:60%'
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-let g:fzf_preview_window = 'right:60%'
+  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
 
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--info=inline']}), <bang>0)

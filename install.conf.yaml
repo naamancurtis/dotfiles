@@ -24,6 +24,8 @@
     ~/.config/nvim/init.vim: init.vim
     ~/.config/nvim/coc-settings.json: vim/coc-settings.json
     ~/.config/coc/ultisnips: ultisnips
+    ~/.fzf.bash:
+    ~/.fzf.zsh:
 - create:
     - ~/code
     - ~/code/.cargo
