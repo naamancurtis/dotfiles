@@ -29,14 +29,17 @@ source ~/.bash/prompt.bash
 # Plugins
 source ~/.bash/plugins.bash
 
+# FZF
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 # Allow local customizations in the ~/.shell_local_after file
 if [ -f ~/.shell_local_after ]; then
     source ~/.shell_local_after
 fi
+
 
 # Allow local customizations in the ~/.bashrc_local_after file
 if [ -f ~/.bashrc_local_after ]; then
     source ~/.bashrc_local_after
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
