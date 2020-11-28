@@ -249,8 +249,8 @@ augroup miscGroup
   " always have quickfix window take up all the horizontal space
   autocmd FileType qf wincmd J
 
-  " configure indentation for python
   autocmd FileType python set expandtab tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType rust set expandtab tabstop=4 softtabstop=4 shiftwidth=4
 
   " Disable spell checking in vim help files
   autocmd FileType help set nospell
@@ -590,8 +590,9 @@ let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDToggleCheckAllLines = 1
 
-nnoremap <leader>c<leader> <plug>NERDCommenterToggle
-nnoremap <leader>c<leader> <plug>NERDCommenterToggle
+nnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
+inoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
+xnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
 
 " ==============================
 " == ** LANGUAGE SPECIFICS ** ==
