@@ -629,5 +629,11 @@ let g:highlightedyank_highlight_duration = 170
 " local customizations in ~/.vimrc_local
 let $LOCALFILE=expand("~/.vimrc_local")
 if filereadable($LOCALFILE)
-    source $LOCALFILE
+    silent! source $LOCALFILE
+endif
+
+" project customizatios in `profject/vimrc_project`
+let $PROJECTFILE=expand("/.vimrc_project")
+if filereadable($PROJECTFILE)
+    silent! source $PROJECTFILE
 endif

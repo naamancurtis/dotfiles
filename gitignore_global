@@ -18,6 +18,7 @@
 \.#*
 .ipynb_checkpoints/
 .vim
+.vimrc_project
 
 # Logs and databases #
 ######################
