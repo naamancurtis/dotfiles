@@ -21,7 +21,6 @@ Plug 'mhinz/vim-grepper'
 " Coding Sanity
 Plug 'jiangmiao/auto-pairs'
 Plug 'machakann/vim-sandwich'
-" Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
  
 " Shell Sanity
@@ -49,7 +48,7 @@ Plug 'tpope/vim-fugitive'
 " Language Intellisense
 Plug 'neoclide/coc.nvim', { 'do': { -> coc#util#install() }}
 Plug 'sheerun/vim-polyglot'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " Rust
