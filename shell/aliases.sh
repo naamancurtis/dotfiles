@@ -22,6 +22,9 @@ alias gp="git pull"
 # Rust aliases
 alias ca="cargo"
 
+alias d="docker"
+alias dc="docker-compose"
+
 # Update dotfiles
 dfu() {
     (

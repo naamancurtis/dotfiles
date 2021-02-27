@@ -74,7 +74,6 @@ Plug 'Shougo/vimproc.vim'
 Plug 'christoomey/vim-sort-motion'
 Plug 'christoomey/vim-system-copy'
 Plug 'davidpdrsn/vim-notable'
-Plug 'davidpdrsn/vim-spectacular'
 
 Plug 'jparise/vim-graphql'
 
@@ -82,6 +81,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-speeddating'
+Plug 'liuchengxu/vim-which-key'
 
 Plug 'sainnhe/edge' " Color Scheme
 
@@ -112,7 +112,7 @@ set hidden                        " Don't unload buffers when leaving them
 set nospell                       " Set spell checking to false by default
 set spelllang=en_us               " Use English US for spell checking
 set lazyredraw                    " Don't redraw screen while running macros
-set scrolljump=5                  " Scroll more than one line
+set scrolljump=3                  " Scroll more than one line
 set scrolloff=3                   " Minimum lines to keep above or below the cursor when scrolling
 set nojoinspaces                  " Insert only one space when joining lines that contain sentence-terminating punctuation like `.`.
 set splitbelow                    " Open splits below
@@ -122,7 +122,7 @@ set visualbell                    " Disable annoying beep
 set wildmenu                      " Enable command-line like completion
 set wildmode=list:longest
 set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
-set wrap                          " Wrap long lines
+set backspace=2                   " Backspace over newlines
 
 " UI
 set laststatus=2                  " Always show the status line
@@ -145,14 +145,29 @@ set signcolumn=yes
 set cmdheight=1
 set conceallevel=0
 set textwidth=80
+set ttyfast
+set lazyredraw
+set synmaxcol=250
+set colorcolumn=100
 
 highlight TermCursor ctermfg=red guifg=red
 
 " searching
-set hlsearch                      " Highlight search matches
-set ignorecase                    " Do case insensitive search unless there are capital letters
-set incsearch                     " Perform incremental searching
+set incsearch
+set ignorecase
 set smartcase
+set gdefault
+
+nnoremap ? ?\v
+nnoremap / /\v
+cnoremap %s/ %sm/
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
 
 " backups & undo
 set noswapfile
@@ -163,22 +178,32 @@ set undodir=~/.vimdid
 set undofile
 
 " indentation
-set noexpandtab                   " Indent with tabs
-set shiftwidth=2                  " Number of spaces to use when indenting
-set smartindent                   " Auto indent new lines
-set softtabstop=2                 " Number of spaces a <tab> counts for when inserting
-set tabstop=2                     " Number of spaces a <tab> counts for
+set autoindent                    " Auto indent new lines
+set expandtab
 
 " folds
 set foldenable                    " Enable folds
 set foldlevelstart=99             " Open all folds by default
 set foldmethod=indent             " Fold by indentation
 
+" Wrapping options
+set formatoptions=c               " wrap text and comments using textwidth
+set formatoptions+=r              " continue comments when pressing ENTER in I mode
+set formatoptions+=q              " enable formatting of comments with gq
+set formatoptions+=n              " detect lists for formatting
+set formatoptions+=b              " auto-wrap in insert mode, and do not wrap old long lines
+set formatoptions-=t 
+
 " mouse
 set mouse=a
 
 set t_ZH=^[[3m
 set t_ZR=^[[23m
+
+if executable('rg')
+	set grepprg=rg\ --no-heading\ --vimgrep
+	set grepformat=%f:%l:%c:%m
+endif
 
 source ~/.vim/functions.vim
 
@@ -249,9 +274,6 @@ augroup miscGroup
   " always have quickfix window take up all the horizontal space
   autocmd FileType qf wincmd J
 
-  autocmd FileType python set expandtab tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd FileType rust set expandtab tabstop=4 softtabstop=4 shiftwidth=4
-
   " Disable spell checking in vim help files
   autocmd FileType help set nospell
 
@@ -267,6 +289,8 @@ augroup end
 " ==============================
 " ===    GENERAL MAPPINGS    ===
 " ==============================
+
+nnoremap <silent> <leader>wk :WhichKey '<Space>'<CR>
 
 " No arrow keys --- force yourself to use the home row
 nnoremap <up> <nop>
@@ -315,6 +339,8 @@ nnoremap <leader>a :call YankWholeBuffer(0)<cr>
 nnoremap <leader>p :call PasteFromSystemClipBoard()<cr>
 nnoremap <leader>cs :call CorrectSpelling()<cr>
 
+let g:rooter_patterns = ['.git']
+
 " ==============================
 " ===          GIT           ===
 " ==============================
@@ -325,8 +351,8 @@ nmap <leader>gs :G<CR>
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 
-nnoremap <leader>gc :Gcommit -v<cr>
-nnoremap <leader>gp :Gpush<cr>
+nnoremap <leader>gc :Git commit -v<cr>
+nnoremap <leader>gp :Git push<cr>
 
 " Vim Grepper
 
@@ -377,14 +403,16 @@ nnoremap <leader>st :vs term://zsh<cr>
 " ===         COC            ===
 " ==============================
 
-let g:coc_global_extensions = [ 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-highlight',  'coc-tslint-plugin',  'coc-rust-analyzer', 'coc-snippets']
- " \ 'coc-eslint',
- " \ 'coc-tsserver',
- " \ 'coc-jest',
+let g:coc_global_extensions = [ 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-highlight', 'coc-rust-analyzer', 'coc-snippets', 'coc-docker', 'coc-tsserver', 'coc-eslint', 'coc-java', 'coc-protobuf']
 
 nnoremap <leader>cao :CocCommand actions.open<cr>
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -397,7 +425,12 @@ inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <S-TAB>
+      \ pumvisible() ? "\<C-p>" :
+      \ <SID>check_back_space() ? "\<S-TAB>" :
+      \ coc#refresh()
+
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ca <Plug>(coc-codeaction)
@@ -406,11 +439,11 @@ nmap <leader>ca <Plug>(coc-codeaction)
 nmap <leader>cqf <Plug>(coc-fix-current)
 nmap <silent>[g <Plug>(coc-diagnostic-prev)
 nmap <silent>]g <Plug>(coc-diagnostic-next)
-nmap <silent>gd <Plug>(coc-definition)
-nmap <silent>gy <Plug>(coc-type-definition)
-nmap <silent>gi <Plug>(coc-implementation)
+nmap <silent>cd <Plug>(coc-definition)
+nmap <silent>cy <Plug>(coc-type-definition)
+nmap <silent>ci <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>crn <Plug>(coc-rename)
 
 " Introduce function text object
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -430,13 +463,12 @@ omap ac <Plug>(coc-classobj-a)
 " nnoremap <leader>OI :OrganiseImports<CR>
 
 " Find symbol of current document.
-nnoremap <silent> <space>o :<C-u>CocList outline<cr>
-
+nnoremap <silent> <space>co :<C-u>CocList outline<cr> 
 " Search workspace symbols.
-nnoremap <silent> <space>sy :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>csy :<C-u>CocList -I symbols<cr>
 
 " Implement methods for trait
-nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
+nnoremap <silent> <space>cip  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
 
 " Use K to show documentation in preview window.
 nnoremap <silent>K :call <SID>show_documentation()<cr>
@@ -529,43 +561,6 @@ nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
 nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
 " ==============================
-" ===    BUILD / RUNNING     ===
-" ==============================
-
-nnoremap <leader>b :call BuildCurrentFile()<cr>
-nnoremap <leader>B :call RunCurrentFile()<cr>
-
-" ==============================
-" ===      TEST RUNNING      ===
-" ==============================
-
-nnoremap <leader>t :w<cr>:call spectacular#run_tests()<cr>
-nnoremap <leader>tl :w<cr>:call spectacular#run_tests_with_current_line()<cr>
-
-call spectacular#reset()
-
-call spectacular#add_test_runner(
-      \ 'ruby, javascript, eruby, coffee, haml, yml',
-      \ ':call SmartRun("rspec {spec}")',
-      \ ''
-      \ )
-
-call spectacular#add_test_runner(
-      \ 'ruby, javascript, eruby, coffee, haml, yml',
-      \ ':call SmartRun("rspec {spec}:{line-number}")',
-      \ ''
-      \ )
-
-call spectacular#add_test_runner(
-      \ 'rust, toml',
-      \ ':call SmartRun("cargo test")',
-      \ '.rs'
-      \ )
-
-let g:spectacular_use_terminal_emulator = 1
-let g:spectacular_debugging_mode = 0
-
-" ==============================
 " ===        SNIPPETS        ===
 " ==============================
 
@@ -591,33 +586,21 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDToggleCheckAllLines = 1
 
 nnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
-inoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
-xnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
+vnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
 
 " ==============================
 " == ** LANGUAGE SPECIFICS ** ==
 " ==============================
 
+runtime! include/lang.vim
+
 " ==============================
 " ===         RUST           ===
 " ==============================
 
-let g:rustfmt_command = "rustfmt"
-let g:rustfmt_autosave = 1
-
-" Follow Rust code style rules
-au Filetype rust set colorcolumn=100
-
-" Crate information
-if has('nvim')
-  autocmd BufRead Cargo.toml call crates#toggle()
-endif
-
 " ==============================
 " ===     MISC SETTINGS      ===
 " ==============================
-
-let g:multi_cursor_exit_from_visual_mode = 0
 
 " Change highlighted yank coloring to be more visible
 highlight HighlightedyankRegion cterm=reverse gui=reverse

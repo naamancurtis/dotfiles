@@ -55,6 +55,13 @@ export CARGO_TARGET_DIR="$HOME/code/.cargo"
 path+='/code/exec'
 path+=$BREW
 path+=$HOME/.cargo/bin
+path+=/usr/local/opt/llvm/bin
+
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
+export GUILE_LOAD_PATH="/usr/local/share/guile/site/3.0"
+export GUILE_LOAD_COMPILED_PATH="/usr/local/lib/guile/3.0/site-ccache"
+export GUILE_SYSTEM_EXTENSIONS_PATH="/usr/local/lib/guile/3.0/extensions"
 
 export PATH
-
+ulimit -n 1024

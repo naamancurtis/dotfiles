@@ -29,6 +29,8 @@ source ~/.zsh/prompt.zsh
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+eval "$(direnv hook zsh)"
+
 # External plugins (initialized after)
 source ~/.zsh/plugins_after.zsh
 

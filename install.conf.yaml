@@ -21,6 +21,7 @@
     ~/.zshrc:
     ~/.Brewfile:
     ~/.alacritty.yml:
+    ~/.config/nvim: nvim
     ~/.config/nvim/init.vim: init.vim
     ~/.config/nvim/coc-settings.json: vim/coc-settings.json
     ~/.config/coc/ultisnips: ultisnips
