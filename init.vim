@@ -68,8 +68,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 
 " === Trialing ===
-Plug 'Shougo/vimproc.vim'
-
 Plug 'christoomey/vim-sort-motion'
 Plug 'christoomey/vim-system-copy'
 Plug 'davidpdrsn/vim-notable'
@@ -100,6 +98,7 @@ let g:edge_disable_italic_comment = 1
 
 let g:python3_host_prog = '/usr/local/opt/python@3.8/bin/python3.8'
 let g:coc_node_path = '/usr/local/opt/node@14/bin/node'
+nnoremap <leader>hk :e ~/notes.md <CR>
 
 set termguicolors
 colorscheme edge
@@ -325,6 +324,15 @@ vnoremap <leader>y "+y
 nnoremap <leader>Y gg"+yG
 
 " ==============================
+" ===         SNEAK          ===
+" ==============================
+
+map f <Plug>Sneak_s
+map F <Plug>Sneak_S
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
+" ==============================
 " ===    CUSTOM FUNCTIONS    ===
 " ==============================
 
@@ -402,7 +410,7 @@ nnoremap <leader>st :vs term://zsh<cr>
 " ===         COC            ===
 " ==============================
 
-let g:coc_global_extensions = [ 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-highlight', 'coc-rust-analyzer', 'coc-snippets', 'coc-docker', 'coc-tsserver', 'coc-eslint', 'coc-java', 'coc-protobuf']
+let g:coc_global_extensions = ['coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier', 'coc-yaml', 'coc-highlight', 'coc-rust-analyzer', 'coc-snippets', 'coc-docker', 'coc-tsserver', 'coc-eslint', 'coc-java', 'coc-protobuf']
 
 nnoremap <leader>cao :CocCommand actions.open<cr>
 
@@ -596,6 +604,12 @@ runtime! include/lang.vim
 " ==============================
 " ===         RUST           ===
 " ==============================
+
+if has('nvim')
+  autocmd BufRead Cargo.toml call crates#toggle()
+endif
+
+highlight Crates ctermfg=green ctermbg=NONE cterm=NONE
 
 " ==============================
 " ===     MISC SETTINGS      ===
