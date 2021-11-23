@@ -56,6 +56,7 @@ path+='/code/exec'
 path+=$BREW
 path+=$HOME/.cargo/bin
 path+=/usr/local/opt/llvm/bin
+path+=$HOME/istio-1.11.4/bin
 
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"

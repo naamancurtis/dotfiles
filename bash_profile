@@ -1,5 +1,6 @@
 source ~/.bashrc
 
-export PATH="$HOME/.cargo/bin:$PATH"
 
 ulimit -n 1024
+source "$HOME/.cargo/env"
+eval $(/bin/brew shellenv)

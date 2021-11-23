@@ -6,7 +6,7 @@ if [ -f ~/.zshrc_local_before ]; then
     source ~/.zshrc_local_before
 fi
 
-source $(brew --prefix)/opt/antigen/share/antigen/antigen.zsh
+source ~/antigen.zsh
 
 # External plugins (initialized before)
 source ~/.zsh/plugins_before.zsh
@@ -38,3 +38,4 @@ source ~/.zsh/plugins_after.zsh
 if [ -f ~/.zshrc_local_after ]; then
     source ~/.zshrc_local_after
 fi
+[[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)

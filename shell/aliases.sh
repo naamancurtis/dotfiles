@@ -24,3 +24,8 @@ alias ca="cargo"
 
 alias d="docker"
 alias dc="docker-compose"
+
+alias python="python3"
+
+alias c="xclip -selection clipboard"
+alias gsf="git submodule foreach"

@@ -1,6 +1,5 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["*"],
-  "rust.clippy_preference": "on",
   "eslint.autoFixOnSave": true,
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextCurrentLineOnly": false,
@@ -8,13 +7,24 @@
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.checkOnSave.allFeatures": true,
   "rust-analyzer.hoverActions.enable": true,
-  "rust-analyzer.cargo.loadOutDirsFromCheck": true,
   "rust-analyzer.procMacro.enable": true,
   "rust-analyzer.completion.postfix.enable": false,
   "rust-analyzer.lens.methodReferences": true,
-  "rust-analyzer.hoverActions.linksInHover": true,
+  "rust-analyzer.hover.linksInHover": true,
+  "rust-analyzer.assist.importGranularity": "module",
+  "rust-analyzer.cargo.runBuildScripts": true,
+  "rust-analyzer.assist.importEnforceGranularity": true,
+  "rust-analyzer.experimental.procAttrMacros": true,
   "rust-analyzer.debug.runtime": "vimspector",
-  "rust.wait_to_build": 250,
   "rust-analyzer.completion.autoimport.enable": true,
-  "rust-analyzer.lruCapacity": 256
+  "rust-analyzer.lruCapacity": 256,
+  "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+  "tsserver.implicitProjectConfig.experimentalDecorators": true,
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-lsp",
+      "filetypes": ["terraform"],
+      "initializationOptions": {}
+    }
+  }
 }

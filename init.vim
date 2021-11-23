@@ -92,7 +92,7 @@ filetype plugin indent on         " Enable good stuff
 syntax enable                     " Enable syntax highlighting
 
 " Color Scheme
-let g:edge_style = 'aura'
+let g:edge_style = 'default'
 let g:edge_enable_italic = 1
 let g:edge_disable_italic_comment = 1
 
@@ -100,7 +100,14 @@ let g:python3_host_prog = '/usr/local/opt/python@3.8/bin/python3.8'
 let g:coc_node_path = '/usr/local/opt/node@14/bin/node'
 nnoremap <leader>hk :e ~/notes.md <CR>
 
-set termguicolors
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+set background=dark
+set t_Co=256
 colorscheme edge
 
 set updatetime=250
@@ -346,7 +353,7 @@ nnoremap <leader>a :call YankWholeBuffer(0)<cr>
 nnoremap <leader>p :call PasteFromSystemClipBoard()<cr>
 nnoremap <leader>cs :call CorrectSpelling()<cr>
 
-let g:rooter_patterns = ['.git']
+let g:rooter_patterns = ['Cargo.toml', '.git']
 
 " ==============================
 " ===          GIT           ===
@@ -592,8 +599,8 @@ let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDToggleCheckAllLines = 1
 
-nnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
-vnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
+nnoremap <leader>c<space> :call nerdcommenter#Comment(0, 'toggle')<cr>
+vnoremap <leader>c<space> :call nerdcommenter#Comment(0, 'toggle')<cr>
 
 " ==============================
 " == ** LANGUAGE SPECIFICS ** ==
