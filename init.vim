@@ -592,8 +592,8 @@ let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDToggleCheckAllLines = 1
 
-nnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
-vnoremap <leader>c<space> :call NERDComment(0, 'toggle')<cr>
+nnoremap <leader>c<space> :call nerdcommenter#Comment(0, 'toggle')<cr>
+vnoremap <leader>c<space> :call nerdcommenter#Comment(0, 'toggle')<cr>
 
 " ==============================
 " == ** LANGUAGE SPECIFICS ** ==
