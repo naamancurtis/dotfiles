@@ -56,6 +56,7 @@ path+='/code/exec'
 path+=$BREW
 path+=$HOME/.cargo/bin
 path+=/usr/local/opt/llvm/bin
+path+=/usr/local/bin/rust-analyzer
 
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"

@@ -86,7 +86,7 @@ font:
     #   - (Windows) Consolas
     # family: Fira Code
     # style: Retina
-    family: Iosevka Term
+    family: Iosevka Nerd Font Mono
     style: Regular
 
   # Bold font face
@@ -96,8 +96,8 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Iosevka Term SS12
-    style: Bold
+    family: Iosevka Nerd Font Mono
+    style: Medium
 
   # Italic font face
   italic:
@@ -105,7 +105,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Iosevka Term SS12
+    family: Iosevka Nerd Font Mono
     style: Light Oblique
 
   # Point size
