@@ -14,8 +14,9 @@ vim.cmd([[
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  use "projekt0n/github-nvim-theme"
+  -- use "projekt0n/github-nvim-theme"
   use 'navarasu/onedark.nvim'
+  use 'onsails/lspkind-nvim'
 
   use {
     'nvim-telescope/telescope.nvim',
@@ -34,9 +35,17 @@ return require('packer').startup(function(use)
   use 'simrat39/rust-tools.nvim'
   use 'mfussenegger/nvim-dap'
 
+  -- Typescript
+  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
   use 'hrsh7th/vim-vsnip'
 
   use 'kyazdani42/nvim-web-devicons'
+
+  -- Editor
+  use 'machakann/vim-sandwich'
+  use 'christoomey/vim-system-copy'
+  use 'christoomey/vim-tmux-navigator'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

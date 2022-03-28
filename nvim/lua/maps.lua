@@ -20,5 +20,10 @@ nnoremap('<leader>gr', '<cmd> lua require("telescope.builtin").lsp_references()<
 nnoremap('<leader>di', '<cmd> lua require("telescope.builtin").diagnostics()<cr>')
 nnoremap('<leader>ts', '<cmd> lua require("telescope.builtin").treesitter()<cr>')
 
+nnoremap('<up>', '10<C-W>+')
+nnoremap('<down>', '10<C-W>-')
+nnoremap('<left>', '3<C-W>>')
+nnoremap('<right>', '3<C-W><')
+
 -- Rust
 nnoremap('<leader>rr', '<cmd> lua require("rust-tools.runnables").runnables()<cr>')
