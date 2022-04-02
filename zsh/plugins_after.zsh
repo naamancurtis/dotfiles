@@ -8,7 +8,7 @@ plugins=(
     rust 
     zsh-autosuggestions 
     fast-syntax-highlighting 
-    osx 
+    macos 
     ripgrep 
     tmux
     brew

@@ -1,3 +1,6 @@
+local utils = require('utils')
+local nnoremap = utils.nnoremap
+
 local ts_utils_settings = {
     import_all_scan_buffers = 100,
     update_imports_on_move = true,
@@ -9,7 +12,6 @@ local M = {}
 M.setup = function(on_attach, capabilities)
     local lspconfig = require('lspconfig')
     local ts_utils = require('nvim-lsp-ts-utils')
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
     lspconfig['tsserver'].setup({
         root_dir = lspconfig.util.root_pattern('package.json'),
@@ -20,9 +22,9 @@ M.setup = function(on_attach, capabilities)
             ts_utils.setup(ts_utils_settings)
             ts_utils.setup_client(client)
 
-            buf_set_keymap(bufnr, 'n', 'gO', ':TSLspOrganize<CR>')
-            buf_set_keymap(bufnr, 'n', 'gR', ':TSLspRenameFile<CR>')
-            buf_set_keymap(bufnr, 'n', 'gI', ':TSLspImportAll<CR>')
+            nnoremap('gO', ':TSLspOrganize<CR>')
+            nnoremap('gR', ':TSLspRenameFile<CR>')
+            nnoremap('gI', ':TSLspImportAll<CR>')
 
             client.resolved_capabilities.document_formatting = false
         end,

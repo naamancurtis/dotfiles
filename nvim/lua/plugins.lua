@@ -44,8 +44,13 @@ return require('packer').startup(function(use)
 
   -- Editor
   use 'machakann/vim-sandwich'
-  use 'christoomey/vim-system-copy'
+  --use 'christoomey/vim-system-copy'
   use 'christoomey/vim-tmux-navigator'
+
+  -- Code support
+  use 'preservim/nerdcommenter'
+  use 'jiangmiao/auto-pairs'
+  use 'mhartington/formatter.nvim'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

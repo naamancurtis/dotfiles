@@ -1,3 +1,6 @@
+local utils = require('utils')
+local nnoremap = utils.nnoremap
+local vnoremap = utils.vnoremap
 local opt = vim.opt
 
 local function set_ui_options()
@@ -36,9 +39,10 @@ local function set_editor_options()
     scrolloff = 12,
     completeopt = { "menu", "menuone", "noselect" },
     clipboard = "unnamedplus",
-    shiftwidth = 4,
-    softtabstop = 4,
-    tabstop = 4,
+    shiftwidth = 2,
+    softtabstop = 2,
+    tabstop = 2,
+    smarttab = true,
     swapfile = false,
     expandtab = true,
     foldmethod = "indent",

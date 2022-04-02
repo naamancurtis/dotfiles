@@ -57,12 +57,14 @@ path+=$BREW
 path+=$HOME/.cargo/bin
 path+=/usr/local/opt/llvm/bin
 path+=/usr/local/bin/rust-analyzer
+path+=$HOME/go/bin
 
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
 export GUILE_LOAD_PATH="/usr/local/share/guile/site/3.0"
 export GUILE_LOAD_COMPILED_PATH="/usr/local/lib/guile/3.0/site-ccache"
 export GUILE_SYSTEM_EXTENSIONS_PATH="/usr/local/lib/guile/3.0/extensions"
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080,bg=underline"
 
 export PATH
 ulimit -n 1024

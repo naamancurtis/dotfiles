@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["auto-pairs"] = {
+    loaded = true,
+    path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/auto-pairs",
+    url = "https://github.com/jiangmiao/auto-pairs"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -89,10 +94,20 @@ _G.packer_plugins = {
     path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
+  ["formatter.nvim"] = {
+    loaded = true,
+    path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/formatter.nvim",
+    url = "https://github.com/mhartington/formatter.nvim"
+  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
     url = "https://github.com/onsails/lspkind-nvim"
+  },
+  nerdcommenter = {
+    loaded = true,
+    path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/nerdcommenter",
+    url = "https://github.com/preservim/nerdcommenter"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -154,11 +169,6 @@ _G.packer_plugins = {
     path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/vim-sandwich",
     url = "https://github.com/machakann/vim-sandwich"
   },
-  ["vim-system-copy"] = {
-    loaded = true,
-    path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/vim-system-copy",
-    url = "https://github.com/christoomey/vim-system-copy"
-  },
   ["vim-tmux-navigator"] = {
     loaded = true,
     path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator",
@@ -177,5 +187,6 @@ if should_profile then save_profiles() end
 end)
 
 if not no_errors then
+  error_msg = error_msg:gsub('"', '\\"')
   vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
 end
