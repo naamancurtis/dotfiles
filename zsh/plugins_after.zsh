@@ -10,7 +10,6 @@ plugins=(
     fast-syntax-highlighting 
     macos 
     ripgrep 
-    tmux
     brew
 )
 autoload -U compinit && compinit

@@ -24,3 +24,8 @@ alias ca="cargo"
 
 alias d="docker"
 alias dc="docker-compose"
+alias k="kubectl"
+
+alias zj="zellij"
+
+alias python="python3"

@@ -13,8 +13,7 @@
     ~/.gitconfig:
     ~/.gitignore_global:
     ~/.shell:
-    ~/.tmux.conf:
-    ~/.tmux:
+    ~/.config/zellij: zellij
     ~/.vim:
     ~/.vimrc:
     ~/.zsh:
@@ -22,8 +21,6 @@
     ~/.Brewfile:
     ~/.alacritty.yml:
     ~/.config/nvim: nvim
-    ~/.fzf.bash:
-    ~/.fzf.zsh:
 - create:
     - ~/code
     - ~/code/.cargo
