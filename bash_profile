@@ -1,6 +1,5 @@
 source ~/.bashrc
 
-export PATH="$HOME/.cargo/bin:$PATH"
 
 ulimit -n 1024
 
@@ -19,3 +18,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+. "$HOME/.cargo/env"

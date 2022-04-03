@@ -26,9 +26,6 @@ source ~/.shell/aliases.sh
 # Custom prompt
 source ~/.zsh/prompt.zsh
 
-# FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 eval "$(direnv hook zsh)"
 
 # External plugins (initialized after)
