@@ -47,7 +47,8 @@ local function set_editor_options()
     expandtab = true,
     foldmethod = "indent",
     foldlevelstart = 99,
-    signcolumn = 'yes'
+    signcolumn = 'yes',
+    undodir = '~/.vimdid'
   }
   for k, v in pairs(options) do
     opt[k] = v
