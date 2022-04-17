@@ -14,7 +14,6 @@ nnoremap('<leader>s', '<cmd> lua require("telescope.builtin").live_grep()<cr>')
 nnoremap('<leader>;', '<cmd> lua require("telescope.builtin").buffers()<cr>')
 nnoremap('<leader>ch', '<cmd> lua require("telescope.builtin").command_history()<cr>')
 nnoremap('<leader>qf', '<cmd> lua require("telescope.builtin").quickfix()<cr>')
-nnoremap('<leader>ch', '<cmd> lua require("telescope.builtin").command_history()<cr>')
 nnoremap('<leader>km', '<cmd> lua require("telescope.builtin").keymaps()<cr>')
 
 nnoremap('<leader>gr', '<cmd> lua require("telescope.builtin").lsp_references()<cr>')
@@ -35,11 +34,11 @@ vnoremap('<space>c<space>', ':call nerdcommenter#Comment(0, \'toggle\')<cr>')
 nnoremap('<leader>rr', '<cmd> lua require("rust-tools.runnables").runnables()<cr>')
 
 -- Copy
-nnoremap('cp', '"+y')
-vnoremap('cp', '"+y')
+nnoremap('<space>cp', '"+y')
+vnoremap('<space>cp', '"+y')
 
 -- Paste
-nnoremap('cv', '"+p')
-nnoremap('cV', '"+P')
-vnoremap('cv', '"+p')
-vnoremap('cV', '"+p')
+nnoremap('<space>cv', '"+p')
+nnoremap('<space>cV', '"+P')
+vnoremap('<space>cv', '"+p')
+vnoremap('<space>cV', '"+p')
