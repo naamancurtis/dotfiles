@@ -29,3 +29,5 @@ alias k="kubectl"
 alias zj="zellij"
 
 alias python="python3"
+
+alias gcafp="git add . && git commit --amend && git push -f"

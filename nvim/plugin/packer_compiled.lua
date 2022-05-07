@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/formatter.nvim",
     url = "https://github.com/mhartington/formatter.nvim"
   },
+  ["go.nvim"] = {
+    loaded = true,
+    path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/go.nvim",
+    url = "https://github.com/ray-x/go.nvim"
+  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/Users/naaman/.local/share/nvim/site/pack/packer/start/lspkind-nvim",

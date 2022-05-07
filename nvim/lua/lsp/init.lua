@@ -119,3 +119,5 @@ local servers = { 'rust-analyzer', 'tsserver', 'sumneko_lua', 'dockerls', 'graph
 for _, server in ipairs(servers) do
     require('lsp.' .. server).setup(on_attach, capabilities)
 end
+
+require('lsp.goo')

@@ -35,6 +35,9 @@ return require('packer').startup(function(use)
   use 'simrat39/rust-tools.nvim'
   use 'mfussenegger/nvim-dap'
 
+  -- Go
+  use 'ray-x/go.nvim'
+
   -- Typescript
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 

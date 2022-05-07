@@ -10,9 +10,17 @@ end
 vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.js,*.ts,*.rs,*.lua,*.sh,*.json,*.py,*.tf FormatWrite
+  autocmd BufWritePost *.js,*.ts,*.rs,*.lua,*.sh,*.json,*.py,*.tf :silent! lua vim.lsp.buf.formatting()
 augroup END
 ]], true)
+
+
+vim.api.nvim_exec([[
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost *.go :silent! lua require('go.format').goimport()
+augroup END
+]], false)
 
 
 vim.api.nvim_exec([[
