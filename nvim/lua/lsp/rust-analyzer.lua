@@ -18,7 +18,6 @@ local srv_settings = {
         checkOnSave = {
             command = 'clippy',
             allFeatures = true,
-            extraArgs = '--tests',
         },
         completion = {
             addCallArgumentSnippets = true,
