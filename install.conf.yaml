@@ -12,10 +12,7 @@
     ~/.dotfiles: ""
     ~/.gitconfig:
     ~/.gitignore_global:
-    ~/.shell:
     ~/.config/zellij: zellij
-    ~/.vim:
-    ~/.vimrc:
     ~/.zsh:
     ~/.zshrc:
     ~/.Brewfile:
@@ -23,7 +20,6 @@
     ~/.config/nvim: nvim
 - create:
     - ~/code
-    - ~/code/.cargo
     - ~/notes
     - ~/.vimdid
 

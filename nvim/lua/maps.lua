@@ -42,3 +42,6 @@ nnoremap('<space>cv', '"+p')
 nnoremap('<space>cV', '"+P')
 vnoremap('<space>cv', '"+p')
 vnoremap('<space>cV', '"+p')
+
+-- Trouble
+nnoremap('<leader>xx', '<cmd>TroubleToggle<cr>')

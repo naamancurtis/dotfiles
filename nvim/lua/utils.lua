@@ -28,7 +28,7 @@ local function make_keymap_fn(mode, o)
   end
 end
 
-local map_opts = {noremap = flse, silent = true}
+local map_opts = {noremap = false, silent = true}
 utils.nmap = make_keymap_fn("n", map_opts)
 utils.xmap = make_keymap_fn("x", map_opts)
 utils.imap = make_keymap_fn("i", map_opts)

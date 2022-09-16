@@ -4,7 +4,7 @@ local srv_settings = {
         notifications = { cargoTomlNotFound = false },
         assist = {
             importGroup = true,
-            importMergeBehaviour = 'full',
+            importMergeBehaviour = 'module',
             importPrefix = 'by_crate',
         },
         callInfo = {
@@ -18,6 +18,7 @@ local srv_settings = {
         checkOnSave = {
             command = 'clippy',
             allFeatures = true,
+            allTargets = true,
         },
         completion = {
             addCallArgumentSnippets = true,
@@ -34,7 +35,7 @@ local srv_settings = {
             enableExperimental = true,
         },
         hoverActions = {
-            enale = true,
+            enable = true,
             debug = true,
             gotoTypeDef = true,
             implementations = true,
@@ -73,9 +74,8 @@ local M = {
                 -- Automatically set inlay hints (type hints)
                 autoSetHints = true,
 
-                -- Whether to show hover actions inside the hover window
-                -- This overrides the default hover handler
-                hover_with_actions = true,
+                -- automatically call RustReloadWorkspace when writing to a Cargo.toml file.
+                reload_workspace_from_cargo_toml = true,
 
                 -- how to execute terminal commands
                 -- options right now: termopen / quickfix
@@ -146,23 +146,6 @@ local M = {
                     -- whether the hover action window gets automatically focused
                     auto_focus = false
                 },
-
-                -- settings for showing the crate graph based on graphviz and the dot
-                -- command
-                crate_graph = {
-                    -- Backend used for displaying the graph
-                    -- see: https://graphviz.org/docs/outputs/
-                    -- default: x11
-                    backend = "x11",
-                    -- where to store the output, nil for no output stored (relative
-                    -- path from pwd)
-                    -- default: nil
-                    output = nil,
-                    -- true for all crates.io and external crates, false only the local
-                    -- crates
-                    -- default: true
-                    full = true,
-                }
             },
             -- lsp
             server = {

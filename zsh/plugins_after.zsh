@@ -1,16 +1,19 @@
 # External plugins (initialized after)
 
 plugins=(
+    vi-mode
     git
     zsh
-    cargo
     zsh-completions
     rust
-    zsh-autosuggestions
-    fast-syntax-highlighting
+    direnv
+    docker
+    nvm
+    fd
     macos
     ripgrep
-    vi-mode
     brew
+    zsh-autosuggestions
+    fast-syntax-highlighting
 )
 autoload -U compinit && compinit

@@ -14,7 +14,6 @@ vim.cmd([[
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
-  -- use "projekt0n/github-nvim-theme"
   use 'navarasu/onedark.nvim'
   use 'onsails/lspkind-nvim'
 
@@ -35,20 +34,25 @@ return require('packer').startup(function(use)
   use 'simrat39/rust-tools.nvim'
   use 'mfussenegger/nvim-dap'
 
-  -- Go
-  use 'ray-x/go.nvim'
-
   -- Typescript
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
-  use 'hrsh7th/vim-vsnip'
-
   use 'kyazdani42/nvim-web-devicons'
+  use {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 
   -- Editor
   use 'machakann/vim-sandwich'
-  --use 'christoomey/vim-system-copy'
-  use 'christoomey/vim-tmux-navigator'
+  use 'j-hui/fidget.nvim'
 
   -- Code support
   use 'preservim/nerdcommenter'
