@@ -35,7 +35,6 @@ bindkey -r "^J"
 disable r
 
 export ZSH=$HOME/.oh-my-zsh
-# export MONO_GAC_PREFIX="/usr/local"
 export CARGO_TARGET_DIR="$HOME/code/.cargo"
 
 path+='/code/exec'
@@ -47,10 +46,8 @@ path+=$HOME/go/bin
 
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
-export GUILE_LOAD_PATH="/usr/local/share/guile/site/3.0"
-export GUILE_LOAD_COMPILED_PATH="/usr/local/lib/guile/3.0/site-ccache"
-export GUILE_SYSTEM_EXTENSIONS_PATH="/usr/local/lib/guile/3.0/extensions"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080,bg=underline"
+export ZVM_VI_SURROUND_BINDKEY="s-prefix"
 
 export PATH
 ulimit -n 1024
