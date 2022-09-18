@@ -4,7 +4,8 @@ alias vi="nvim"
 
 # ls aliases
 alias l='exa --long --header --git --all --sort name'
-alias la='exa -a --long --header --sort name'
+alias ls='exa --header --git-ignore -F --sort name'
+alias lsa='exa -a --header -F --sort name'
 alias lst="exa -T --git-ignore --group-directories-first"
 
 # Default behaviour aliases
@@ -18,6 +19,7 @@ alias mv='mv -i'
 # git related aliases
 alias gag='git exec ag'
 alias gp="git pull"
+alias gco="git checkout"
 
 # Rust aliases
 alias ca="cargo"

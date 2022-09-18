@@ -1,5 +1,5 @@
 # Functions
-source ~/.zsh/functions.sh
+source ~/.zsh/functions.zsh
 
 # Allow local customizations in the ~/.zshrc_local_before file
 if [ -f ~/.zshrc_local_before ]; then
@@ -15,7 +15,7 @@ source ~/.zsh/plugins_before.zsh
 source ~/.zsh/settings.zsh
 
 # Aliases
-source ~/.zsh/aliases.sh
+source ~/.zsh/aliases.zsh
 
 # Custom prompt
 source ~/.zsh/prompt.zsh
