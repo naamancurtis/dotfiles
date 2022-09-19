@@ -26,5 +26,3 @@ brew "antigen"
 brew "python"
 
 cask "font-iosevka-nerd-font"
-
-cask "alacritty", args: { appdir: "~/Applications" }

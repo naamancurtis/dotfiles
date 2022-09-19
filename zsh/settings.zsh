@@ -49,5 +49,9 @@ export CPPFLAGS="-I/usr/local/opt/llvm/include"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080,bg=underline"
 export ZVM_VI_SURROUND_BINDKEY="s-prefix"
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh"] &&  \. "/opt/homebrew/opt/nvm/nvm.sh" # loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"] &&  \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" # loads nvm bash completion
+
 export PATH
 ulimit -n 1024
