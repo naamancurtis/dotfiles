@@ -24,5 +24,6 @@ brew "the_silver_searcher"
 brew "zsh"
 brew "antigen"
 brew "python"
+brew "nushell"
 
 cask "font-iosevka-nerd-font"

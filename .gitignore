@@ -3,3 +3,4 @@ vim/plugged
 tmux/plugins
 tmux/resurrect
 nvim/plugin
+nushell/history.txt

@@ -18,6 +18,9 @@
     ~/.Brewfile:
     ~/.alacritty.yml:
     ~/.config/nvim: nvim
+    "~/Library/Application Support/nushell": nushell
+    ~/.cache/starship: starship
+    ~/.config/starship.toml: starship/starship.toml
 - create:
     - ~/code
     - ~/notes

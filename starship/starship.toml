@@ -1,0 +1,100 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = "$all $fill $time"
+# Inserts a blank line between shell prompts
+# add_newline = true
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character] # The name of the module we are configuring is "character"
+success_symbol = "[﬌](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[](bold red)"
+
+[directory]
+read_only = " "
+truncation_length = 10
+truncate_to_repo = true # truncates directory to root folder if in github repo
+
+[aws]
+symbol = "  "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+
+[elixir]
+symbol = " "
+
+[elm]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[julia]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+
+[nim]
+symbol = " "
+
+[nix_shell]
+symbol = " "
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "ﳒ "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+[spack]
+symbol = "🅢 "
+
+[time]
+time_format = "%m %b - %T"
+format = "🕙  $time($style) "
+style = "bright-white"
+disabled = false
+
+[fill]
+symbol = " "
