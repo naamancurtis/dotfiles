@@ -5,12 +5,13 @@ local srv_settings = {
         assist = {
             importGroup = true,
             importMergeBehaviour = 'module',
-            importPrefix = 'by_crate',
+            importPrefix = 'crate',
         },
         callInfo = {
             full = true,
         },
         cargo = {
+            features = "all",
             allFeatures = true,
             autoreload = true,
             loadOutDirsFromCheck = true,
@@ -57,6 +58,11 @@ local srv_settings = {
         },
         procMacro = {
             enable = true,
+        },
+        imports = {
+            granularity = {
+                enforce = true
+            }
         },
     },
 }
