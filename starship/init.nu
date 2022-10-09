@@ -4,7 +4,7 @@ let-env PROMPT_MULTILINE_INDICATOR = (^/usr/local/bin/starship prompt --continua
 
 # Does not play well with default character module.
 # TODO: Also Use starship vi mode indicators?
-let-env PROMPT_INDICATOR = ""
+# let-env PROMPT_INDICATOR = ""
 
 let-env PROMPT_COMMAND = {
     # jobs are not supported
@@ -16,3 +16,6 @@ let-env PROMPT_COMMAND = {
 # Built-in right prompt is equivalent to $fill$right_format in the first prompt line.
 # Thus does not play well with default `add_newline = True`.
 # let-env PROMPT_COMMAND_RIGHT = {''}
+# let-env PROMPT_INDICATOR_VI_INSERT = " "
+# let-env PROMPT_INDICATOR_VI_NORMAL = " "
+# let-env PROMPT_MULTILINE_INDICATOR = " "

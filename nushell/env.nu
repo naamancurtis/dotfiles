@@ -22,13 +22,6 @@
 # let-env PROMPT_COMMAND = { create_left_prompt }
 # let-env PROMPT_COMMAND_RIGHT = { create_right_prompt }
 
-# The prompt indicators are environmental variables that represent
-# the state of the prompt
-# let-env PROMPT_INDICATOR = { "〉" }
-# let-env PROMPT_INDICATOR_VI_INSERT = { ": " }
-# let-env PROMPT_INDICATOR_VI_NORMAL = { "〉" }
-# let-env PROMPT_MULTILINE_INDICATOR = { "::: " }
-
 # Specifies how environment variables are:
 # - converted from a string to a value on Nushell startup (from_string)
 # - converted from a value back to a string when running external commands (to_string)
@@ -61,20 +54,20 @@ let-env NU_PLUGIN_DIRS = [
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # let-env PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 
-let-env BAT_THEME="OneHalfDark"
-let-env CARGO_TARGET_DIR="~/code/.cargo"
-let-env NVM_DIR="~/.nvm"
+# let-env BAT_THEME = OneHalfDark
+# let-env CARGO_TARGET_DIR = ~/code/.cargo
+# let-env NVM_DIR = ~/.nvm
 
 # Seems like nu shell can pull from zsh based PATH?
-let path = [
-  "~/code/bin",
-  "~/code/exec",
-  "~/.cargo/bin",
-  "/usr/local/opt/llvm/bin",
-  "/usr/local/bin/rust-analyzer",
-  "~/go/bin",
-]
+# let path = [
+#   "~/code/bin",
+#   "~/code/exec",
+#   "~/.cargo/bin",
+#   "/usr/local/opt/llvm/bin",
+#   "/usr/local/bin/rust-analyzer",
+#   "~/go/bin",
+# ]
 
-$path | each { |$it| let-env PATH = ($env.PATH | append $it) }
+# $path | each { |$it| let-env PATH = ($env.PATH | append $it) }
 
-starship init nu | save ~/.cache/starship/init.nu
+# starship init nu | save ~/.cache/starship/init.nu

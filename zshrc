@@ -18,7 +18,13 @@ source ~/.zsh/settings.zsh
 source ~/.zsh/aliases.zsh
 
 # Custom prompt
-source ~/.zsh/prompt.zsh
+
+if [ $TERM_PROGRAM != "Apple_Terminal" ]; then
+    source ~/.zsh/oh-my-posh.zsh
+else
+    source ~/.zsh/prompt.zsh
+fi
+
 
 eval "$(direnv hook zsh)"
 

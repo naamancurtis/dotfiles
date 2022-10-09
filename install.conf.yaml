@@ -19,8 +19,10 @@
     ~/.alacritty.yml:
     ~/.config/nvim: nvim
     "~/Library/Application Support/nushell": nushell
+    ~/.nushell: nushell
     ~/.cache/starship: starship
     ~/.config/starship.toml: starship/starship.toml
+    ~/.shell_theme.omp.json: oh-my-posh/theme.omp.json
 - create:
     - ~/code
     - ~/notes

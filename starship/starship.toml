@@ -3,7 +3,7 @@
 
 format = "$all $fill $time"
 # Inserts a blank line between shell prompts
-# add_newline = true
+add_newline = false
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character] # The name of the module we are configuring is "character"
@@ -15,8 +15,12 @@ read_only = " "
 truncation_length = 10
 truncate_to_repo = true # truncates directory to root folder if in github repo
 
+# let-env PROMPT_INDICATOR_VI_INSERT = " "
+# let-env PROMPT_INDICATOR_VI_NORMAL = " "
+# let-env PROMPT_MULTILINE_INDICATOR = " "
+
 [aws]
-symbol = "  "
+symbol = " "
 
 [buf]
 symbol = " "

@@ -532,4 +532,16 @@ alias ca = cargo
 
 alias python = python3
 
-source ~/.cache/starship/init.nu
+# let posh_dir = (brew --prefix oh-my-posh | str trim)
+# let posh_theme = $'($posh_dir)/share/oh-my-posh/themes/'
+
+# let-env PROMPT_COMMAND = { oh-my-posh prompt print primary --config ~/.shell_theme.omp.json }
+# Optional
+# let-env PROMPT_INDICATOR = $"(ansi y)$> (ansi reset)"
+# let-env PROMPT_INDICATOR_VI_INSERT = " "
+# let-env PROMPT_INDICATOR_VI_NORMAL = " "
+# let-env PROMPT_MULTILINE_INDICATOR = " "
+
+# source ~/.cache/starship/init.nu
+
+source ~/.nushell/oh_my_posh.nu
