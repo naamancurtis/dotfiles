@@ -4,7 +4,7 @@ local srv_settings = {
         notifications = { cargoTomlNotFound = false },
         assist = {
             importGroup = true,
-            importMergeBehaviour = 'module',
+            importMergeBehaviour = 'crate',
             importPrefix = 'crate',
         },
         callInfo = {
@@ -61,7 +61,8 @@ local srv_settings = {
         },
         imports = {
             granularity = {
-                enforce = true
+                enforce = true,
+                group = 'crate'
             }
         },
     },
