@@ -1,23 +1,17 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
-
-format = "$all $fill $time"
 # Inserts a blank line between shell prompts
 add_newline = false
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character] # The name of the module we are configuring is "character"
-success_symbol = "[﬌](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
-error_symbol = "[](bold red)"
+success_symbol = "[](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[](bold red)"
 
 [directory]
 read_only = " "
 truncation_length = 10
 truncate_to_repo = true # truncates directory to root folder if in github repo
-
-# let-env PROMPT_INDICATOR_VI_INSERT = " "
-# let-env PROMPT_INDICATOR_VI_NORMAL = " "
-# let-env PROMPT_MULTILINE_INDICATOR = " "
 
 [aws]
 symbol = " "
@@ -45,6 +39,19 @@ symbol = " "
 
 [git_branch]
 symbol = " "
+
+[git_status]
+format = "$all_status"
+ahead = '⇡${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+behind = '⇣${count}'
+conflicted = "[$count](red)"
+untracked = "[$count ](yellow)"
+staged = "[$count ](green)"
+modified = "[$count ](cyan)"
+renamed = "[$count ](bright-yellow)"
+deleted = "[$count ](red)"
+stashed = "[$count󰼽 ](white)"
 
 [golang]
 symbol = " "
@@ -96,7 +103,7 @@ symbol = "🅢 "
 
 [time]
 time_format = "%m %b - %T"
-format = "🕙  $time($style) "
+format = "🕙 $time($style) "
 style = "bright-white"
 disabled = false
 

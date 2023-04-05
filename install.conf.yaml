@@ -6,23 +6,17 @@
 - clean: ["~", "~/.config"]
 
 - link:
-    ~/.bash:
-    ~/.bash_profile:
-    ~/.bashrc:
     ~/.dotfiles: ""
     ~/.gitconfig:
     ~/.gitignore_global:
-    ~/.config/zellij: zellij
     ~/.zsh:
     ~/.zshrc:
     ~/.Brewfile:
-    ~/.alacritty.yml:
+    ~/.antigenrc:
     ~/.config/nvim: nvim
-    "~/Library/Application Support/nushell": nushell
-    ~/.nushell: nushell
     ~/.cache/starship: starship
     ~/.config/starship.toml: starship/starship.toml
-    ~/.shell_theme.omp.json: oh-my-posh/theme.omp.json
+    ~/.warp: warp
 - create:
     - ~/code
     - ~/notes

@@ -39,8 +39,8 @@ disable r
 export ZSH=$HOME/.oh-my-zsh
 export CARGO_TARGET_DIR="$HOME/code/.cargo"
 
-path+='/code/exec'
 path+=$BREW
+path+='/code/exec'
 path+=$HOME/.cargo/bin
 path+=/usr/local/opt/llvm/bin
 path+=/usr/local/bin/rust-analyzer
@@ -50,6 +50,7 @@ export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080,bg=underline"
 export ZVM_VI_SURROUND_BINDKEY="s-prefix"
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] &&  \. "/opt/homebrew/opt/nvm/nvm.sh" # loads nvm

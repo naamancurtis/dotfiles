@@ -3,10 +3,10 @@ alias vim="nvim"
 alias vi="nvim"
 
 # ls aliases
-alias l='exa --long --header --git --all --sort name'
-alias ls='exa --header --git-ignore -F --sort name'
-alias lsa='exa -a --header -F --sort name'
-alias lst="exa -T --git-ignore --group-directories-first"
+alias l='exa --long --header --git --group-directories-first --all --sort name --icons --no-user'
+alias ls='exa --header --git-ignore -F --group-directories-first --icons'
+alias lsa='exa -a --header -F --group-directories-first --icons'
+alias lst="exa -T --git-ignore --group-directories-first --icons"
 
 # Default behaviour aliases
 alias md='mkdir -p'
@@ -32,4 +32,4 @@ alias zj="zellij"
 
 alias python="python3"
 
-alias gcafp="git add . && git commit --amend && git push -f"
+alias gcafp="git add . && git commit -S --amend && git push -f"
